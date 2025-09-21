@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AspiraX - Kritik Asik Tanpa Harus Terusik</title>
+    <title>AspiraX</title>
 
     <!-- Impor Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -115,12 +115,9 @@
 </head>
 
 <body class="bg-white text-gray-900">
-
     <div id="app-wrapper">
-        <!-- Header / Navigation Bar -->
         <header class="py-6 relative z-10 container mx-auto px-4">
             <nav class="flex justify-between items-center">
-                <!-- Logo -->
                 <a href="#" class="flex items-center space-x-2">
                     <svg class="w-8 h-8 text-black" viewBox="0 0 24 24" fill="none"
                         xmlns="http://www.w3.org/2000/svg">
@@ -133,36 +130,30 @@
 
                 <!-- Navigation Links (Desktop) -->
                 <div class="hidden md:flex items-center space-x-4 md:space-x-6">
-                    <a href="#"
-                    class="text-sm font-medium text-gray-600 hover:text-black transition-colors">
-                    Leaderboard
+                    <a href="#" class="text-sm font-medium text-gray-600 hover:text-black transition-colors">
+                        Leaderboard
                     </a>
-                    <a href="#"
-                    class="text-sm font-medium text-gray-600 hover:text-black transition-colors">
-                    Statistics
+                    <a href="#" class="text-sm font-medium text-gray-600 hover:text-black transition-colors">
+                        Statistics
                     </a>
-                    <a href="#"
-                    class="text-sm font-medium text-gray-600 hover:text-black transition-colors">
-                    AspiroBot Edu
+                    <a href="#" class="text-sm font-medium text-gray-600 hover:text-black transition-colors">
+                        Aspiro
                     </a>
 
                     <!-- MetaMask Login Button -->
                     <div>
                         <meta name="csrf-token" content="{{ csrf_token() }}">
-                        <button
-                            id="metamask-login-desktop"
-                            type="button"
+                        <button id="metamask-login-desktop" type="button"
                             data-signature-url="{{ url('/eth/signature') }}"
                             data-authenticate-url="{{ url('/eth/authenticate') }}"
                             data-redirect-url="{{ route('dashboard') }}"
-                            class="text-sm font-semibold bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg shadow-sm transition"
-                        >
+                            class="text-sm font-semibold bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg shadow-sm transition">
                             🔗 Login with MetaMask
                         </button>
-                        <div id="metamask-error-desktop" class="hidden mt-4 p-2 text-sm text-red-600 bg-red-100 rounded"></div>
+                        <div id="metamask-error-desktop"
+                            class="hidden mt-4 p-2 text-sm text-red-600 bg-red-100 rounded"></div>
                     </div>
                 </div>
-
 
                 <!-- Hamburger Button (Mobile) -->
                 <div class="md:hidden flex items-center">
@@ -179,19 +170,13 @@
             <!-- Mobile Menu -->
             <div id="mobile-menu" class="hidden md:hidden bg-white shadow-lg rounded-lg mt-2 p-4 absolute right-4 w-56">
                 <a href="#" class="block py-2 px-3 text-gray-600 hover:bg-gray-100 rounded">AspiroBot Edu</a>
-                <!-- MetaMask Login -->
-            <meta name="csrf-token" content="{{ csrf_token() }}">
-            <button
-                id="metamask-login-mobile"
-                type="button"
-                data-signature-url="{{ url('/eth/signature') }}"
-                data-authenticate-url="{{ url('/eth/authenticate') }}"
-                data-redirect-url="{{ route('dashboard') }}"
-                class="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-4 rounded-md shadow-sm transition"
-            >
-                🔗 Login with MetaMask
-            </button>
-            <div id="metamask-error-mobile" class="hidden mt-4 p-2 text-sm text-red-600 bg-red-100 rounded"></div>
+                <meta name="csrf-token" content="{{ csrf_token() }}">
+                <button id="metamask-login-mobile" type="button" data-signature-url="{{ url('/eth/signature') }}"
+                    data-authenticate-url="{{ url('/eth/authenticate') }}" data-redirect-url="{{ route('dashboard') }}"
+                    class="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-4 rounded-md shadow-sm transition">
+                    🔗 Login with MetaMask
+                </button>
+                <div id="metamask-error-mobile" class="hidden mt-4 p-2 text-sm text-red-600 bg-red-100 rounded"></div>
 
             </div>
         </header>
@@ -215,22 +200,17 @@
             <a href="#"
                 class="mt-10 inline-flex items-center gap-2 bg-black text-white font-semibold rounded-lg px-8 py-3 hover:bg-gray-800 transition-all duration-300 transform hover:scale-105 animate-bounce"
                 style="animation-delay: 0.5s;">
-                <!-- Ikon Play -->
                 <svg class="w-5 h-5 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                     <path d="M6 4l12 6-12 6V4z" />
                 </svg>
                 Start Your Opinion
             </a>
-
         </main>
 
         <section class="w-full py-16 sm:py-20 md:py-24">
             <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-x-12 gap-y-10">
-
-                    <!-- Kolom Kiri -->
                     <div class="flex flex-col justify-between space-y-10">
-                        <!-- Header -->
                         <div class="flex justify-between items-start pt-4 border-t border-gray-300">
                             <h1
                                 class="text-3xl font-display sm:text-4xl md:text-5xl font-bold text-gray-800 uppercase tracking-widest leading-tight">
@@ -239,16 +219,13 @@
                             <span class="hidden sm:block text-xs font-medium text-gray-500 whitespace-nowrap pt-2">(01)
                                 About Us</span>
                         </div>
-                        <!-- Gambar -->
                         <div class="w-3/5">
                             <img src="{{ asset('storage/images/tuntutan.png') }}" alt="tuntutan-terbaru"
                                 class="w-full h-auto ">
                         </div>
                     </div>
-
                     <!-- Kolom Kanan -->
                     <div class="relative flex flex-col justify-between pt-4 border-t border-gray-300">
-                        <!-- Teks Deskripsi -->
                         <div class="lg:pl-8">
                             <p
                                 class="text-sm sm:text-base text-gray-600 leading-relaxed max-w-md uppercase tracking-wider">
@@ -259,22 +236,16 @@
                                 tapi oleh suara rakyat yang tak pernah padam.
                             </p>
                         </div>
-
-                        <!-- Logo Latar Belakang -->
                         <div class="absolute inset-0 flex items-center justify-center lg:justify-end -z-10 opacity-60">
                             <svg class="w-2/3 sm:w-1/2 lg:w-3/4 h-auto text-gray-200" viewBox="0 0 100 100"
                                 fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M50 0 L100 50 L50 100 L50 75 L25 75 L25 25 L50 25 Z" />
                             </svg>
                         </div>
-
-                        <!-- Teks Bawah -->
                         <div class="text-right mt-10 lg:mt-0">
                             <span class="text-xs sm:text-sm font-medium text-gray-500">Build With Spirit<br> From
                                 Students To Civilization</span>
                         </div>
-
-                        <!-- Teks About Us untuk Mobile -->
                         <span class="sm:hidden text-xs font-medium text-gray-500 mt-8">(01) About Us</span>
                     </div>
 
@@ -282,22 +253,76 @@
             </div>
         </section>
 
+        <!-- Features Section -->
+        <section id="features" class="py-20 bg-black">
+            <div class="container mx-auto px-4 my-20 text-center">
+                <h2 class="font-display text-4xl font-bold mb-20 text-white">Fitur Unggulan Kami</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
+                    <div class="flex flex-col items-center">
+                        <div class="bg-blue-100 p-4 rounded-full mb-4">
+                            <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z">
+                                </path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2 text-white">Aman & Anonim</h3>
+                        <p class="text-gray-400">Identitas Anda terlindungi dengan teknologi Web3 dan Kriptografi</p>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <div class="bg-purple-100 p-4 rounded-full mb-4">
+                            <svg class="w-8 h-8 text-purple-600" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z">
+                                </path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2 text-white">Terfiltrasi</h3>
+                        <p class="text-gray-400">Setiap aspirasi akan diverifikasi dan terfilter agar berfokus pada
+                            tujuan yang jelas.</p>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <div class="bg-pink-100 p-4 rounded-full mb-4">
+                            <svg class="w-8 h-8 text-pink-600" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a2 2 0 01-2-2V7a2 2 0 012-2h2.586a1 1 0 01.707.293l2.414 2.414a1 1 0 01.293.707V8z">
+                                </path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2 text-white">Aspiro</h3>
+                        <p class="text-gray-400">Chat Bot untuk mendukung dan membantu anda menyampaikan aspirasi Anda.
+                        </p>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <div class="bg-green-100 p-4 rounded-full mb-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                stroke-width="1.5" stroke="currentColor" class="w-8 h-8 text-green-500">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M21 11.25v8.25a1.5 1.5 0 0 1-1.5 1.5H5.25a1.5 1.5 0 0 1-1.5-1.5v-8.25M12 4.875A2.625 2.625 0 1 0 9.375 7.5H12m0-2.625V7.5m0-2.625A2.625 2.625 0 1 1 14.625 7.5H12m0 0V21m-8.625-9.75h18c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125h-18c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z" />
+                            </svg>
+
+                        </div>
+                        <h3 class="text-xl font-bold mb-2 text-white">Leaderboard</h3>
+                        <p class="text-gray-400">Tingkatkan partisipasi dan capai leaderboard tertinggi</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- Vision & Mission Section -->
         <section id="vision-mission" class="py-20 bg-white">
             <div class="container mx-auto px-4">
-                <!-- Section Header -->
                 <div class="text-center mb-12">
                     <h2 class="font-display text-4xl font-bold mb-4 text-gray-800">Visi & Misi Kami</h2>
                     <p class="text-gray-600 max-w-2xl mx-auto">Membangun masa depan demokrasi yang lebih transparan,
                         aman, dan partisipatif untuk Indonesia.</p>
                 </div>
-
                 <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12">
-
-                    <!-- Vision Column -->
                     <div
                         class="bg-white p-8 rounded-2xl shadow-lg flex flex-col items-center text-center outline outline-2 outline-gray-200">
-                        <!-- Icon -->
                         <div class="bg-pink-100 p-4 rounded-full mb-6">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                 stroke-width="1.5" stroke="currentColor" class="size-6">
@@ -313,11 +338,8 @@
                             kemajuan bersama.
                         </p>
                     </div>
-
-                    <!-- Mission Column -->
                     <div
                         class="bg-white p-8 rounded-2xl shadow-lg flex flex-col items-center text-center outline outline-2 outline-gray-200">
-                        <!-- Icon -->
                         <div class="bg-green-100 p-4 rounded-full mb-6">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                 stroke-width="1.5" stroke="currentColor" class="size-6">
@@ -342,48 +364,41 @@
 
         <!-- Inserted Gallery Section -->
         <section class="w-full bg-black text-white flex flex-col overflow-hidden">
-            <!-- Horizontally Scrolling Image Gallery -->
             <div class="w-full h-[40vh] md:h-[50vh] whitespace-nowrap overflow-hidden">
                 <div class="h-full w-max flex animate-scrolling">
-                    <!-- Original Set of Images -->
-                    <img src="{{ asset('storage/images/demo1.webp') }}" alt="Demonstrasi publik di Indonesia"
+                    <img src="{{ asset('storage/images/Demo-Mahasiswa-Duduki-Gedung-MPR-Mei-1998.jpg') }}" alt="Demonstrasi publik di Indonesia"
                         alt="Demonstrasi publik di Indonesia" class="h-full w-auto object-cover grayscale">
-                    <img src="{{ asset('storage/images/demo2.jpg') }}" alt="Barisan aparat kepolisian"
+                    <img src="{{ asset('storage/images/buruh.jpg') }}" alt="Barisan aparat kepolisian"
                         class="h-full w-auto object-cover grayscale">
-                    <img src="{{ asset('storage/images/demo3.jpeg') }}" alt="Menyuarakan opini dengan megafon"
+                    <img src="{{ asset('storage/images/aparat.jpg') }}" alt="Menyuarakan opini dengan megafon"
                         class="h-full w-auto object-cover grayscale">
-                    <img src="{{ asset('storage/images/demo4.jpg') }}" alt="Kepalan tangan sebagai simbol perlawanan"
+                    <img src="{{ asset('storage/images/Aksi-Kamisan-ke-815-160524-Bay-5.jpg') }}" alt="Kepalan tangan sebagai simbol perlawanan"
                         class="h-full w-auto object-cover grayscale">
-                    <img src="{{ asset('storage/images/demo5.jpg') }}" alt="Mahasiswa melakukan aksi protes"
+                    <img src="{{ asset('storage/images/1330134_720.jpg') }}" alt="Mahasiswa melakukan aksi protes"
                         class="h-full w-auto object-cover grayscale">
-                    <img src="{{ asset('storage/images/demo6.jpg') }}" alt="Aparat dalam formasi"
+                    <img src="{{ asset('storage/images/images (2).jpg') }}" alt="Aparat dalam formasi"
                         class="h-full w-auto object-cover grayscale">
 
-                    <!-- Duplicated Set of Images for seamless loop -->
-                    <img src="{{ asset('storage/images/demo1.webp') }}" alt="Demonstrasi publik di Indonesia"
+                    <img src="{{ asset('storage/images/Demo-Mahasiswa-Duduki-Gedung-MPR-Mei-1998.jpg') }}" alt="Demonstrasi publik di Indonesia"
                         alt="Demonstrasi publik di Indonesia" class="h-full w-auto object-cover grayscale">
-                    <img src="{{ asset('storage/images/demo2.jpg') }}" alt="Barisan aparat kepolisian"
+                    <img src="{{ asset('storage/images/buruh.jpg') }}" alt="Barisan aparat kepolisian"
                         class="h-full w-auto object-cover grayscale">
-                    <img src="{{ asset('storage/images/demo3.jpeg') }}" alt="Menyuarakan opini dengan megafon"
+                    <img src="{{ asset('storage/images/aparat.jpg') }}" alt="Menyuarakan opini dengan megafon"
                         class="h-full w-auto object-cover grayscale">
-                    <img src="{{ asset('storage/images/demo4.jpg') }}" alt="Kepalan tangan sebagai simbol perlawanan"
+                    <img src="{{ asset('storage/images/Aksi-Kamisan-ke-815-160524-Bay-5.jpg') }}" alt="Kepalan tangan sebagai simbol perlawanan"
                         class="h-full w-auto object-cover grayscale">
-                    <img src="{{ asset('storage/images/demo5.jpg') }}" alt="Mahasiswa melakukan aksi protes"
+                    <img src="{{ asset('storage/images/1330134_720.jpg') }}" alt="Mahasiswa melakukan aksi protes"
                         class="h-full w-auto object-cover grayscale">
-                    <img src="{{ asset('storage/images/demo6.jpg') }}" alt="Aparat dalam formasi"
+                    <img src="{{ asset('storage/images/images (2).jpg') }}" alt="Aparat dalam formasi"
                         class="h-full w-auto object-cover grayscale">
                 </div>
             </div>
 
-            <!-- Content Area -->
             <div
                 class="flex-grow flex flex-col md:flex-row items-center justify-center md:justify-between p-8 md:p-16 lg:p-24 relative">
-                <!-- Thin line separator -->
                 <div
                     class="absolute top-0 left-1/2 -translate-x-1/2 md:left-0 md:translate-x-0 w-11/12 md:w-full h-[1px] bg-gray-700">
                 </div>
-
-                <!-- Text Content -->
                 <div class="text-center md:text-left md:w-3/5 lg:w-1/2 mb-12 md:mb-0">
                     <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold  leading-tight mb-4 font-display">
                         Galeri Perjuangan Rakyat
@@ -392,8 +407,6 @@
                         Lihat bagaimana aspirasi dan kritik membentuk perubahan di Indonesia.
                     </p>
                 </div>
-
-                <!-- Explore Button -->
                 <div class="flex-shrink-0">
                     <a href="#"
                         class="group w-36 h-36 md:w-40 md:h-40 rounded-full border border-gray-500 flex items-center justify-center text-center transition-all duration-300 ease-in-out hover:bg-pink-300 hover:border-pink-600">
@@ -406,71 +419,71 @@
             </div>
         </section>
 
-
-        <!-- Features Section -->
-        <section id="features" class="py-10 bg-black">
-            <div class="container mx-auto px-4 my-20 text-center">
-                <h2 class="font-display text-4xl font-bold mb-20 text-white">Fitur Unggulan Kami</h2>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
-                    <!-- Feature 1 -->
-                    <div class="flex flex-col items-center">
-                        <div class="bg-blue-100 p-4 rounded-full mb-4">
-                            <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor"
-                                viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z">
-                                </path>
-                            </svg>
-                        </div>
-                        <h3 class="text-xl font-bold mb-2 text-white">Aman & Anonim</h3>
-                        <p class="text-gray-400">Identitas Anda terlindungi dengan teknologi Web3 dan Kriptografi</p>
+        <!-- Stats Section -->
+        <section class="relative bg-black flex flex-col items-center justify-center text-white overflow-hidden p-6 py-20">
+            <div class="z-10 flex flex-col items-center w-full max-w-6xl mx-auto">
+                <div class="text-center">
+                    <h1 class="text-4xl md:text-6xl font-black tracking-tight font-display">Bumi Yang Subur, Masalah Yang Makmur</h1>
+                    <p class="mt-4 max-w-3xl mx-auto text-lg text-gray-300">
+                        Kekayaan alam melimpah tidak otomatis membuat bangsa sejahtera, bila korupsi dan salah kelola terus dibiarkan.
+                    </p>
+                </div>
+                <div class="mt-12 mb-10 w-full max-w-5xl rounded-2xl shadow-2xl overflow-hidden border-2 border-gray-700">
+                    <img src="{{ asset('storage/images/kabinet.jpg') }}"
+                        alt="Foto kabinet pemerintahan Indonesia di tangga istana negara"
+                        class="w-full h-auto object-cover">
+                </div>
+                <div class="grid grid-cols-2 md:grid-cols-5 gap-8 w-full max-w-5xl text-center">
+                    <div class="stat-item">
+                        <span class="text-4xl md:text-5xl font-bold">17.000+</span>
+                        <span class="block mt-2 text-sm text-gray-400 uppercase tracking-wider">Pulau</span>
                     </div>
-                    <!-- Feature 2 -->
-                    <div class="flex flex-col items-center">
-                        <div class="bg-purple-100 p-4 rounded-full mb-4">
-                            <svg class="w-8 h-8 text-purple-600" fill="none" stroke="currentColor"
-                                viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z">
-                                </path>
-                            </svg>
-                        </div>
-                        <h3 class="text-xl font-bold mb-2 text-white">Terfiltrasi</h3>
-                        <p class="text-gray-400">Setiap aspirasi akan diverifikasi dan terfilter agar berfokus pada
-                            tujuan yang jelas.</p>
+                    <div class="stat-item">
+                        <span class="text-4xl md:text-5xl font-bold">100+</span>
+                        <span class="block mt-2 text-sm text-gray-400 uppercase tracking-wider">Pejabat Tinggi</span>
                     </div>
-                    <!-- Feature 3 -->
-                    <div class="flex flex-col items-center">
-                        <div class="bg-pink-100 p-4 rounded-full mb-4">
-                            <svg class="w-8 h-8 text-pink-600" fill="none" stroke="currentColor"
-                                viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a2 2 0 01-2-2V7a2 2 0 012-2h2.586a1 1 0 01.707.293l2.414 2.414a1 1 0 01.293.707V8z">
-                                </path>
-                            </svg>
-                        </div>
-                        <h3 class="text-xl font-bold mb-2 text-white">Aspiro</h3>
-                        <p class="text-gray-400">Chat Bot untuk mendukung dan membantu anda menyampaikan aspirasi Anda.
-                        </p>
+                    <div class="stat-item">
+                        <span class="text-4xl md:text-5xl font-bold">2.500+</span>
+                        <span class="block mt-2 text-sm text-gray-400 uppercase tracking-wider">Kasus Korupsi</span>
                     </div>
-                    <!-- Feature 4 -->
-                    <div class="flex flex-col items-center">
-                        <div class="bg-green-100 p-4 rounded-full mb-4">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                stroke-width="1.5" stroke="currentColor" class="w-8 h-8 text-green-500">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M21 11.25v8.25a1.5 1.5 0 0 1-1.5 1.5H5.25a1.5 1.5 0 0 1-1.5-1.5v-8.25M12 4.875A2.625 2.625 0 1 0 9.375 7.5H12m0-2.625V7.5m0-2.625A2.625 2.625 0 1 1 14.625 7.5H12m0 0V21m-8.625-9.75h18c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125h-18c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z" />
-                            </svg>
-
-                        </div>
-                        <h3 class="text-xl font-bold mb-2 text-white">Leaderboard</h3>
-                        <p class="text-gray-400">Tingkatkan partisipasi dan capai leaderboard tertinggi</p>
+                    <div class="stat-item">
+                        <span class="text-4xl md:text-5xl font-bold">9.105 T</span>
+                        <span class="block mt-2 text-sm text-gray-400 uppercase tracking-wider">Hutang Negara</span>
+                    </div>
+                    <div class="hidden md:block stat-item">
+                        <span class="text-4xl md:text-5xl font-bold">?</span>
+                        <span class="block mt-2 text-sm text-gray-400 uppercase tracking-wider">Masa Depan</span>
+                    </div>
+                </div>
+                <p class="mt-12 text-center italic text-gray-400 max-w-3xl">
+                    "Kita seolah-olah merayakan demokrasi, tetapi memotong lidah orang-orang yang berani menyatakan pendapat mereka yang merugikan pemerintah."
+                </p>
+                <button
+                    class="mt-8 px-8 py-3 bg-white text-gray-900 font-bold rounded-full hover:bg-gray-200 transition-colors duration-300">
+                    Discover News
+                </button>
+            </div>
+            <div class="absolute bottom-0 left-0 w-full bg-black/30 backdrop-blur-sm py-4 overflow-hidden">
+                <div class="flex animate-scrolling">
+                    <div class="flex-shrink-0 flex items-center w-full justify-around text-xl font-bold text-gray-200">
+                        <span class="mx-8">Ibu Pertiwi</span> <span class="text-gray-500">*</span>
+                        <span class="mx-8">Nusantara</span> <span class="text-gray-500">*</span>
+                        <span class="mx-8">Negeri Seribu Pulau</span> <span class="text-gray-500">*</span>
+                        <span class="mx-8">Negeri Zamrud Khatulistiwa</span> <span class="text-gray-500">*</span>
+                        <span class="mx-8">Macan Asia Yang Tertidur</span> <span class="text-gray-500">*</span>
+                    </div>
+                    <div class="flex-shrink-0 flex items-center w-full justify-around text-xl font-bold text-gray-200">
+                        <span class="mx-8">Ibu Pertiwi</span> <span class="text-gray-500">*</span>
+                        <span class="mx-8">Nusantara</span> <span class="text-gray-500">*</span>
+                        <span class="mx-8">Negeri Seribu Pulau</span> <span class="text-gray-500">*</span>
+                        <span class="mx-8">Negeri Zamrud Khatulistiwa</span> <span class="text-gray-500">*</span>
+                        <span class="mx-8">Macan Asia Yang Tertidur</span> <span class="text-gray-500">*</span>
                     </div>
                 </div>
             </div>
         </section>
-
-        <!-- Globe Section -->
+        
+        {{-- <!-- Globe Section -->
         <section id="globe-section"
             class="relative py-20 bg-gray-800 text-white overflow-hidden min-h-[600px] flex flex-col justify-center">
             <div id="globeViz" class="absolute top-0 left-0 w-full h-full z-0 opacity-70"></div>
@@ -482,18 +495,13 @@
                     global secara real-time.
                 </p>
             </div>
-        </section>
-
+        </section> --}}
 
         <!-- ===== Bagian Footer ===== -->
         <footer class="bg-black text-gray-300">
             <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
-                <!-- Grid utama untuk layout footer -->
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-
-                    <!-- Kolom 1: Logo, deskripsi, dan ikon sosial media -->
                     <div class="md:col-span-2">
-                        <!-- Logo -->
                         <a href="#" class="flex items-center space-x-2">
                             <svg class="w-8 h-8 text-white" viewBox="0 0 24 24" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
@@ -504,16 +512,13 @@
                             </svg>
                             <span class="font-bold text-xl text-white">AspiraX</span>
                         </a>
-                        <!-- Deskripsi -->
                         <p class="mt-4 max-w-md">
                             Bergabunglah dengan AspiraX dan jadilah bagian dari gerakan perubahan yang lebih besar.
                             Suara Anda adalah kekuatan untuk masa depan yang lebih baik.
                         </p>
-                        <!-- Ikon Sosial Media -->
                         <div class="mt-6 flex space-x-4">
                             <a href="#" class="text-gray-400 hover:text-white">
                                 <span class="sr-only">YouTube</span>
-                                <!-- Ikon YouTube (SVG) -->
                                 <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                     <path fill-rule="evenodd"
                                         d="M19.812 5.418c.861.23 1.538.907 1.768 1.768C21.998 8.78 22 12 22 12s0 3.22-.42 4.814a2.506 2.506 0 0 1-1.768 1.768c-1.594.42-7.812.42-7.812.42s-6.218 0-7.812-.42a2.506 2.506 0 0 1-1.768-1.768C2 15.22 2 12 2 12s0-3.22.42-4.814a2.506 2.506 0 0 1 1.768-1.768C5.782 5 12 5 12 5s6.218 0 7.812.418ZM9.94 15.582V8.418L15.822 12 9.94 15.582Z"
@@ -523,8 +528,6 @@
 
                         </div>
                     </div>
-
-                    <!-- Kolom 2: Link AspiraX -->
                     <div>
                         <h3 class="text-sm font-semibold tracking-wider uppercase text-white">AspiraX</h3>
                         <ul class="mt-4 space-y-4">
@@ -532,24 +535,18 @@
                             <li><a href="#" class="hover:text-white">Bantuan</a></li>
                         </ul>
                     </div>
-
-                    <!-- Kolom 3: Link Tentang Kami -->
                     <div>
                         <h3 class="text-sm font-semibold tracking-wider uppercase text-white">Tentang Kami</h3>
                         <ul class="mt-4 space-y-4">
                             <li><a href="#" class="hover:text-white">Fitur</a></li>
                         </ul>
                     </div>
-
                 </div>
-
-                <!-- Garis pemisah dan copyright -->
                 <div class="mt-8 border-t border-gray-700 pt-8 text-center text-sm">
                     <p>&copy; 2025 AspiraX. All rights reserved.</p>
                 </div>
             </div>
         </footer>
-
     </div>
 
     @vite(['resources/js/app.js'])
