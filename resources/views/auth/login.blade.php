@@ -1,63 +1,180 @@
-<x-guest-layout>
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
+<!DOCTYPE html>
+<html lang="en">
 
-    <form method="POST" action="{{ route('login') }}">
-        @csrf
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>{{ config('app.name', 'Laravel') }} - Login</title>
 
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full"
-                type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+
+<body class="antialiased text-gray-800 bg-white">
+    <!-- Main container -->
+    <div class="relative flex flex-col items-center justify-center min-h-screen p-4 overflow-hidden">
+
+        <!-- Login Card -->
+        <div class="relative w-full max-w-4xl bg-white border border-gray-200 rounded-2xl shadow-2xl overflow-hidden">
+            <div class="flex flex-col lg:flex-row">
+
+                <!-- Left Column: Login Form -->
+                <div class="w-full lg:w-1/2 p-8 md:p-12 flex flex-col justify-center">
+                    <div class="text-center lg:text-left">
+                        <!-- Logo Placeholder -->
+                        <h1 class="text-3xl font-bold text-gray-900 mb-2">AspiraX</h1>
+                        <h2 class="text-xl font-medium text-gray-900 mb-4">Masuk ke Akun Wallet Web3 Anda</h2>
+                        <p class="text-gray-600 mb-8 leading-relaxed">
+                            Selamat datang, Suaramu merupakan penentu masa depan. Masuk menggunakan MetaMask untuk
+                            melanjutkan.
+                        </p>
+                    </div>
+
+                    <!-- Session Status -->
+                    @if (session('status'))
+                        <div class="mb-4 font-medium text-sm text-green-700 bg-green-50 p-3 rounded-lg">
+                            {{ session('status') }}
+                        </div>
+                    @endif
+
+                    <!-- MetaMask Login Button -->
+                    <div class="mt-4">
+                        <button id="metamask-login"
+                                type="button"
+                                data-signature-url="{{ url('/eth/signature') }}"
+                                data-authenticate-url="{{ url('/eth/authenticate') }}"
+                                data-redirect-url="{{ route('dashboard') }}"
+                                class="w-full inline-flex items-center justify-center text-sm font-semibold bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-full shadow-sm transition">
+                            🔗 Login with MetaMask
+                        </button>
+                        <div id="metamask-error" class="hidden mt-4 p-2 text-sm text-red-600 bg-red-100 rounded"></div>
+                    </div>
+
+                    <p class="text-center text-xs text-gray-500 mt-8">
+                        Dengan melanjutkan, Anda menyetujui Syarat & Ketentuan kami.
+                    </p>
+                </div>
+
+                <!-- Right Column: Image & Description -->
+                <div class="hidden lg:flex w-1/2 p-12 flex-col justify-center items-center bg-gray-50 rounded-r-2xl">
+                    <!-- Thematic SVG Illustration -->
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="w-32 h-32 text-gray-500 mb-6">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 0 1-.825-.242m9.345-8.334a2.126 2.126 0 0 0-.476-.095 48.64 48.64 0 0 0-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0 0 11.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155" />
+                    </svg>
+
+
+                    <div class="text-center mt-8">
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Pantau Perkembangan Di Indonesia</h3>
+                        <p class="text-gray-600 max-w-sm">
+                            Setelah masuk, kamu bisa bersuara tanpa takut datamu disalahgunakan.
+                        </p>
+                    </div>
+                </div>
+            </div>
         </div>
+    </div>
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-            <x-text-input id="password" class="block mt-1 w-full"
-                type="password" name="password" required autocomplete="current-password" />
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
+    {{-- <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const loginButton = document.getElementById('metamask-login');
+            const errorDiv = document.getElementById('metamask-error');
 
-        <!-- Remember Me -->
-        <div class="block mt-4">
-            <label for="remember_me" class="inline-flex items-center">
-                <input id="remember_me" type="checkbox"
-                    class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500"
-                    name="remember">
-                <span class="ms-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
-            </label>
-        </div>
+            const showError = (message) => {
+                errorDiv.textContent = message;
+                errorDiv.classList.remove('hidden');
+            };
 
-        <div class="flex flex-col items-center justify-center mt-6 space-y-3">
-            @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-600 hover:text-gray-900"
-                   href="{{ route('password.request') }}">
-                    {{ __('Forgot your password?') }}
-                </a>
-            @endif
+            const hideError = () => {
+                errorDiv.classList.add('hidden');
+            };
 
-            <!-- Normal Login -->
-            <x-primary-button class="w-full justify-center">
-                {{ __('Log in') }}
-            </x-primary-button>
+            const handleLogin = async () => {
+                hideError();
 
-            {{-- <!-- MetaMask Login -->
-            <meta name="csrf-token" content="{{ csrf_token() }}">
-            <button
-                id="metamask-login"
-                type="button"
-                data-signature-url="{{ url('/eth/signature') }}"
-                data-authenticate-url="{{ url('/eth/authenticate') }}"
-                data-redirect-url="{{ route('dashboard') }}"
-                class="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-4 rounded-md shadow-sm transition"
-            >
-                🔗 Login with MetaMask
-            </button>
-            <div id="metamask-error" class="hidden mt-4 p-2 text-sm text-red-600 bg-red-100 rounded"></div> --}}
+                // 1. Check if MetaMask is installed
+                if (typeof window.ethereum === 'undefined') {
+                    showError(
+                        'MetaMask tidak terinstal. Silakan install ekstensi MetaMask untuk melanjutkan.'
+                        );
+                    return;
+                }
 
-        </div>
-    </form>
-</x-guest-layout>
+                try {
+                    // 2. Request account access
+                    const accounts = await window.ethereum.request({
+                        method: 'eth_requestAccounts'
+                    });
+                    const publicAddress = accounts[0];
+
+                    // 3. Get message to sign from the server
+                    const signatureUrl = loginButton.dataset.signatureUrl;
+                    const signatureResponse = await fetch(`${signatureUrl}?address=${publicAddress}`);
+
+                    if (!signatureResponse.ok) {
+                        throw new Error('Gagal mendapatkan pesan untuk ditandatangani dari server.');
+                    }
+
+                    const messageToSign = await signatureResponse.text();
+
+                    // 4. Request user to sign the message
+                    const signature = await window.ethereum.request({
+                        method: 'personal_sign',
+                        params: [messageToSign, publicAddress],
+                    });
+
+                    // 5. Authenticate with the server
+                    const authenticateUrl = loginButton.dataset.authenticateUrl;
+                    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute(
+                        'content');
+
+                    const authResponse = await fetch(authenticateUrl, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': csrfToken,
+                        },
+                        body: JSON.stringify({
+                            address: publicAddress,
+                            signature: signature,
+                        }),
+                    });
+
+                    if (!authResponse.ok) {
+                        const errorData = await authResponse.json();
+                        throw new Error(errorData.message || 'Autentikasi gagal.');
+                    }
+
+                    // 6. Redirect on successful login
+                    window.location.href = loginButton.dataset.redirectUrl;
+
+                } catch (error) {
+                    console.error('Login error:', error);
+                    // Handle specific user rejection error
+                    if (error.code === 4001) {
+                        showError('Anda membatalkan permintaan koneksi atau tanda tangan.');
+                    } else {
+                        showError(error.message || 'Terjadi kesalahan saat proses login.');
+                    }
+                }
+            };
+
+            loginButton.addEventListener('click', handleLogin);
+        });
+    </script> --}}
+</body>
+
+</html>
