@@ -6,10 +6,17 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Web3AuthController;
 use App\Http\Controllers\ReplyController;
+use App\Http\Controllers\LeaderboardUser;
+use App\Http\Controllers\Statistic;
+use App\Http\Controllers\AspiroBot;
 
 Route::get('/', function () {
     return view('landing');
 });
+
+Route::get('/leaderboard', [LeaderboardUser::class, 'index']);
+Route::get('/aspiro', [Statistic::class, 'index']);
+Route::get('/statistic', [AspiroBot::class, 'index']);
 
 Route::get('/dashboard', [PostController::class, 'index'])
     ->middleware(['auth', 'verified'])
