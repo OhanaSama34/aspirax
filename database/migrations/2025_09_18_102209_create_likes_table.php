@@ -6,23 +6,21 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
-    public function up(): void {
+    public function up(): void
+    {
         Schema::create('likes', function (Blueprint $table) {
             $table->id();
             $table->foreignId('post_id')->constrained()->cascadeOnDelete();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-            $table->enum('reaction_type', ['like', 'dislike']);
             $table->timestamps();
-    
-            $table->unique(['post_id', 'user_id']); // supaya 1 user tidak bisa like 2x
+
+            // Mencegah user meng-like post yang sama lebih dari sekali
+            $table->unique(['post_id', 'user_id']); 
         });
     }
-    
-    public function down(): void {
+
+    public function down(): void
+    {
         Schema::dropIfExists('likes');
     }
-    
 };
