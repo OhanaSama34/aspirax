@@ -120,15 +120,17 @@
                                         </svg>
                                         <span>{{ rand(10, 100) }}</span>
                                     </div>
-                                    <div class="flex items-center space-x-2 hover:text-red-500">
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path
-                                                d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z">
-                                            </path>
-                                        </svg>
-                                        <span>{{ rand(20, 200) }}</span>
-                                    </div>
-                                    <div class="hover:text-orange-500">
+                                    <div class="flex items-center space-x-2 like-button cursor-pointer" 
+                                            data-post-id="{{ $post->id }}" 
+                                            data-liked="{{ $post->isLikedBy(Auth::user()) ? 'true' : 'false' }}">
+                                            <svg class="w-5 h-5 {{ $post->isLikedBy(Auth::user()) ? 'text-red-500 fill-current' : 'text-gray-500' }}" 
+                                                fill="{{ $post->isLikedBy(Auth::user()) ? 'currentColor' : 'none' }}" 
+                                                stroke="currentColor" viewBox="0 0 24 24">
+                                                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path>
+                                            </svg>
+                                            <span class="like-count">{{ $post->likes()->count() }}</span>
+                                        </div>
+                                        <div class="hover:text-orange-500">
                                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path d="M12 5L12 19M5 12L19 12" stroke-width="2" stroke-linecap="round">
                                             </path>
@@ -213,6 +215,7 @@
 
             // Function to create a new post element
             const createPostElement = (post) => {
+                console.log(post);
                 const postDiv = document.createElement("div");
                 postDiv.classList.add("p-4", "border-b", "border-gray-200", "hover:bg-gray-50", "cursor-pointer");
                 postDiv.innerHTML = `
@@ -251,13 +254,15 @@
                                         </svg>
                                         <span>{{ rand(10, 100) }}</span>
                                     </div>
-                                    <div class="flex items-center space-x-2 hover:text-red-500">
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path
-                                                d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z">
-                                            </path>
+                                    <div class="flex items-center space-x-2 like-button cursor-pointer" 
+                                        data-post-id="${post.id}" 
+                                        data-liked="${post.likes.length > 0 ? 'true' : 'false'}">
+                                        <svg class="w-5 h-5 ${post.likes.length > 0 ? 'text-red-500 fill-current' : 'text-gray-500'}" 
+                                            fill="${post.likes.length > 0 ? 'currentColor' : 'none'}" 
+                                            stroke="currentColor" viewBox="0 0 24 24">
+                                            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path>
                                         </svg>
-                                        <span>{{ rand(20, 200) }}</span>
+                                        <span class="like-count">${post.likes.length}</span>
                                     </div>
                                     <div class="hover:text-orange-500">
                                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

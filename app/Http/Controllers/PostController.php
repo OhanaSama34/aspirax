@@ -15,8 +15,9 @@ class PostController extends Controller
     {
         try {
             // Eager load user agar tidak n+1 problem
-            $posts = Post::with('user')->orderBy('created_at', 'desc')->get();
+            $posts = Post::with(['user', 'likes'])->orderBy('created_at', 'desc')->get();
 
+            // dd($posts);
             // Kirim data ke view dashboard
             return view('dashboard', compact('posts'));
 
@@ -76,7 +77,7 @@ class PostController extends Controller
             return response()->json([
                 'success' =>  true,
                 'message' => 'Post created successfully!',
-                'post'    => $post->load('user'), // eager load relasi user
+                'post'    => $post->load(['user', 'likes']), // eager load relasi user
             ], 201);
     
         } catch (\Throwable $e) {
