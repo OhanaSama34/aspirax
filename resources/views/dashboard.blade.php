@@ -84,11 +84,12 @@
 
             <div id="posts-container" class="posts-container">
                 @foreach ($posts as $post)
-                    <div class="p-4 border-b border-gray-200 hover:bg-gray-50 cursor-pointer">
+                    <div class="post-item p-4 border-b border-gray-200 hover:bg-gray-50 cursor-pointer" 
+                         data-post-id="{{ $post->id }}">
                         <div class="flex space-x-4">
                             <img src="https://placehold.co/48x48/cccccc/333333?text=U"
-                                alt="{{ $post->user->name }} Avatar" class="w-12 h-12 rounded-full flex-shrink-0">
-
+                                 alt="{{ $post->user->name }} Avatar" class="w-12 h-12 rounded-full flex-shrink-0">
+            
                             <div class="w-full">
                                 <div class="flex items-center">
                                     <p class="font-bold text-gray-900">{{ $post->user->name }}</p>
@@ -102,8 +103,11 @@
                                         </svg>
                                     </div>
                                 </div>
+            
                                 <p class="mt-1 text-gray-800">{{ $post->content }}</p>
+            
                                 <div class="flex justify-between items-center mt-4 text-gray-500 max-w-sm">
+                                    <!-- Comment count -->
                                     <div class="flex items-center space-x-2 hover:text-orange-500">
                                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path
@@ -112,6 +116,8 @@
                                         </svg>
                                         <span>{{ $post->replies->count() }}</span>
                                     </div>
+            
+                                    <!-- Retweet / share placeholder -->
                                     <div class="flex items-center space-x-2 hover:text-green-500">
                                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path
@@ -120,28 +126,42 @@
                                         </svg>
                                         <span>{{ rand(10, 100) }}</span>
                                     </div>
+            
+                                    <!-- Like button -->
                                     <div class="flex items-center space-x-2 like-button cursor-pointer" 
-                                            data-post-id="{{ $post->id }}" 
-                                            data-liked="{{ $post->isLikedBy(Auth::user()) ? 'true' : 'false' }}">
-                                            <svg class="w-5 h-5 {{ $post->isLikedBy(Auth::user()) ? 'text-red-500 fill-current' : 'text-gray-500' }}" 
-                                                fill="{{ $post->isLikedBy(Auth::user()) ? 'currentColor' : 'none' }}" 
-                                                stroke="currentColor" viewBox="0 0 24 24">
-                                                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path>
-                                            </svg>
-                                            <span class="like-count">{{ $post->likes()->count() }}</span>
-                                        </div>
-                                        <div class="hover:text-orange-500">
+                                         data-post-id="{{ $post->id }}" 
+                                         data-liked="{{ $post->isLikedBy(Auth::user()) ? 'true' : 'false' }}">
+                                        <svg class="w-5 h-5 {{ $post->isLikedBy(Auth::user()) ? 'text-red-500 fill-current' : 'text-gray-500' }}" 
+                                             fill="{{ $post->isLikedBy(Auth::user()) ? 'currentColor' : 'none' }}" 
+                                             stroke="currentColor" viewBox="0 0 24 24">
+                                            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path>
+                                        </svg>
+                                        <span class="like-count">{{ $post->likes()->count() }}</span>
+                                    </div>
+            
+                                    <!-- Add / placeholder button -->
+                                    <div class="hover:text-orange-500">
                                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path d="M12 5L12 19M5 12L19 12" stroke-width="2" stroke-linecap="round">
-                                            </path>
+                                            <path d="M12 5L12 19M5 12L19 12" stroke-width="2" stroke-linecap="round"></path>
                                         </svg>
                                     </div>
+                                </div>
+                                <!-- COMMENT AREA (default hidden) -->
+                                <div class="comments-area hidden mt-4 border-t border-gray-200 pt-2">
+                                    <div class="comments-list space-y-2"></div>
+                                    <form class="comment-form mt-2 flex space-x-2" data-post-id="{{ $post->id }}">
+                                        <input type="text" name="content" class="flex-1 border rounded px-2 py-1"
+                                            placeholder="Tambahkan komentar...">
+                                        <button type="submit" class="bg-blue-500 text-white px-3 rounded">Kirim</button>
+                                    </form>
                                 </div>
                             </div>
                         </div>
                     </div>
                 @endforeach
             </div>
+        
+            
         </main>
 
         <!-- Sidebar Kanan -->

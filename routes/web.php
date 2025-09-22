@@ -5,6 +5,7 @@ use App\Http\Controllers\LikeController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Web3AuthController;
+use App\Http\Controllers\ReplyController;
 
 Route::get('/', function () {
     return view('landing');
@@ -28,6 +29,11 @@ Route::middleware('auth')->group(function () {
     Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
 
     Route::post('/posts/{post}/toggle-like', [LikeController::class, 'toggleLike'])->name('posts.like');
+
+    Route::get('/posts/{post}', [ReplyController::class, 'show'])->name('posts.show');
+    Route::post('/posts/{post}/reply', [ReplyController::class, 'store'])->name('posts.reply');
+    Route::get('/posts/{post}/replies', [ReplyController::class, 'replies'])->name('posts.replies');
+
 
 });
 

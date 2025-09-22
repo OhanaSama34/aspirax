@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Function to create a new post element
     const createPostElement = (post) => {
-        console.log(post);
+        // console.log(post);
         const postDiv = document.createElement("div");
         postDiv.classList.add(
             "p-4",
