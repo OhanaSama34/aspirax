@@ -57,12 +57,12 @@ document.addEventListener("click", async (e) => {
                     (c) => `
                     <div class="flex space-x-2 items-start p-2 border rounded">
                         <img src="${
-                            c.user.avatar ||
+                            c.user?.avatar ||
                             "https://placehold.co/40x40/cccccc/333333?text=U"
                         }" class="w-10 h-10 rounded-full">
                         <div>
                             <p class="font-bold text-gray-800">${
-                                c.user.name
+                                c.user?.name
                             }</p>
                             <p>${c.content}</p>
                         </div>
@@ -109,12 +109,12 @@ document.addEventListener("submit", async (e) => {
                 `
                 <div class="flex space-x-2 items-start p-2 border rounded">
                     <img src="${
-                        data.reply.user.avatar ||
+                        data.reply.user?.avatar ||
                         "https://placehold.co/40x40/cccccc/333333?text=U"
                     }" class="w-10 h-10 rounded-full">
                     <div>
                         <p class="font-bold text-gray-800">${
-                            data.reply.user.name
+                            data.reply.user?.name
                         }</p>
                         <p>${data.reply.content}</p>
                     </div>
