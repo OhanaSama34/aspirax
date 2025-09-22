@@ -177,7 +177,6 @@
                     🔗 Login with MetaMask
                 </button>
                 <div id="metamask-error-mobile" class="hidden mt-4 p-2 text-sm text-red-600 bg-red-100 rounded"></div>
-
             </div>
         </header>
 
@@ -188,124 +187,75 @@
             </header>
 
             <main>
-                <!-- Bagian 3 Pengguna Teratas -->
+                <!-- Bagian Top 3 Pengguna -->
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
-
-                    <!-- Peringkat 2: Perak -->
-                    <div
-                        class="bg-white p-6 rounded-xl shadow-md border border-gray-200 order-2 md:order-1 lg:order-2 flex flex-col items-center text-center transform hover:-translate-y-2 transition-transform duration-300">
-                        <div class="relative mb-4">
-                            <img class="w-24 h-24 rounded-full object-cover border-4 border-gray-300"
-                                src="https://placehold.co/100x100/E2E8F0/4A5568?text=P2" alt="Avatar Pengguna">
-                            <span
-                                class="absolute -bottom-2 -right-2 bg-gray-300 text-gray-700 w-10 h-10 rounded-full flex items-center justify-center text-xl font-bold border-4 border-white">2</span>
+                    @foreach ($leaderboard->take(3) as $index => $user)
+                        @php
+                            // Tentukan warna dan ukuran border sesuai peringkat
+                            $borderColor = match($index) {
+                                0 => 'border-yellow-400', // emas
+                                1 => 'border-gray-300',   // perak
+                                2 => 'border-orange-300', // perunggu
+                            };
+                            $avatarSize = ($index === 0) ? 'w-28 h-28' : 'w-24 h-24';
+                            $textSize = ($index === 0) ? 'text-2xl' : 'text-xl';
+                            $pointsSize = ($index === 0) ? 'text-xl' : 'text-lg';
+                        @endphp
+                        <div class="bg-white p-6 rounded-xl shadow-md {{ $index === 0 ? 'shadow-xl border-2' : 'border' }} {{ $borderColor }} 
+                                    flex flex-col items-center text-center transform hover:-translate-y-2 transition-transform duration-300 {{ $index === 0 ? 'hover:scale-105' : '' }}">
+                            <div class="relative mb-4">
+                                <img class="{{ $avatarSize }} rounded-full object-cover border-4 {{ $borderColor }}"
+                                     src="{{ $user->avatar ?? 'https://placehold.co/100x100/cccccc/333333?text=U' }}" 
+                                     alt="Avatar {{ $user->name }}">
+                                @if($index === 0)
+                                    <span class="absolute -top-5 text-4xl" style="transform: rotate(15deg);">👑</span>
+                                @endif
+                                <span class="absolute -bottom-2 -right-2 bg-{{ match($index) {
+                                    0 => 'yellow-400',
+                                    1 => 'gray-300',
+                                    2 => 'orange-300',
+                                } }} text-{{ match($index) {
+                                    0 => 'white',
+                                    1 => 'gray-700',
+                                    2 => 'orange-800',
+                                } }} w-10 h-10 {{ $index === 0 ? 'w-12 h-12 text-2xl' : '' }} rounded-full flex items-center justify-center text-xl font-bold border-4 border-white">
+                                    {{ $index + 1 }}
+                                </span>
+                            </div>
+                            <h3 class="font-bold {{ $textSize }} text-gray-900 truncate w-40">
+                                {{ $user->name }}
+                            </h3>
+                            
+                            <p class="text-indigo-600 font-semibold {{ $pointsSize }}">{{ number_format($user->point) }} Poin</p>
                         </div>
-                        <h3 class="text-xl font-bold text-gray-900">Mr. Pablo Moore</h3>
-                        <p class="text-indigo-600 font-semibold text-lg">4,200 Poin</p>
-                    </div>
-
-                    <!-- Peringkat 1: Emas -->
-                    <div
-                        class="bg-white p-6 rounded-xl shadow-xl border-2 border-yellow-400 order-1 md:col-span-2 md:order-2 lg:col-span-1 lg:order-1 transform hover:scale-105 transition-transform duration-300 flex flex-col items-center text-center">
-                        <div class="relative mb-4">
-                            <img class="w-28 h-28 rounded-full object-cover border-4 border-yellow-400"
-                                src="https://placehold.co/120x120/FBBF24/4A5568?text=P1" alt="Avatar Pengguna">
-                            <!-- Ikon Mahkota Emas -->
-                            <span class="absolute -top-5 text-4xl" style="transform: rotate(15deg);">👑</span>
-                            <span
-                                class="absolute -bottom-2 -right-2 bg-yellow-400 text-white w-12 h-12 rounded-full flex items-center justify-center text-2xl font-bold border-4 border-white">1</span>
-                        </div>
-                        <h3 class="text-2xl font-bold text-gray-900">Allen Prohaska PhD</h3>
-                        <p class="text-indigo-600 font-semibold text-xl">4,550 Poin</p>
-                    </div>
-
-                    <!-- Peringkat 3: Perunggu -->
-                    <div
-                        class="bg-white p-6 rounded-xl shadow-md border border-gray-200 order-3 md:order-3 lg:order-3 flex flex-col items-center text-center transform hover:-translate-y-2 transition-transform duration-300">
-                        <div class="relative mb-4">
-                            <img class="w-24 h-24 rounded-full object-cover border-4 border-orange-300"
-                                src="https://placehold.co/100x100/FED7AA/4A5568?text=P3" alt="Avatar Pengguna">
-                            <span
-                                class="absolute -bottom-2 -right-2 bg-orange-300 text-orange-800 w-10 h-10 rounded-full flex items-center justify-center text-xl font-bold border-4 border-white">3</span>
-                        </div>
-                        <h3 class="text-xl font-bold text-gray-900">Jesus Marquardt</h3>
-                        <p class="text-indigo-600 font-semibold text-lg">4,100 Poin</p>
-                    </div>
-
+                    @endforeach
                 </div>
-
+            
                 <!-- Daftar Peringkat Selanjutnya -->
                 <div class="bg-white rounded-xl shadow-md overflow-hidden">
                     <ul class="divide-y divide-gray-200">
-                        <!-- Item Pengguna -->
-                        <li
-                            class="p-4 flex items-center justify-between hover:bg-gray-50 transition-colors duration-200">
-                            <div class="flex items-center space-x-4">
-                                <span class="text-lg font-semibold text-gray-500 w-6 text-center">4</span>
-                                <img class="w-12 h-12 rounded-full object-cover"
-                                    src="https://placehold.co/80x80/A5B4FC/3730A3?text=EP" alt="Avatar Pengguna">
-                                <div>
-                                    <p class="font-semibold text-gray-900">Eleanor Pena</p>
+                        @foreach ($leaderboard->slice(3) as $user)
+                            <li class="p-4 flex items-center justify-between hover:bg-gray-50 transition-colors duration-200">
+                                <div class="flex items-center space-x-4">
+                                    <span class="text-lg font-semibold text-gray-500 w-6 text-center">
+                                        {{ $loop->iteration + 3 }}
+                                    </span>
+                                    <img class="w-12 h-12 rounded-full object-cover"
+                                        src="{{ $user->avatar ?? 'https://placehold.co/80x80/cccccc/333333?text=U' }}" 
+                                        alt="Avatar {{ $user->name }}">
+                                    <div>
+                                        <p class="font-semibold text-gray-900 truncate w-40">{{ $user->name }}</p>
+                                    </div>
                                 </div>
-                            </div>
-                            <span class="font-semibold text-indigo-600 text-lg">3,980 Poin</span>
-                        </li>
-                        <!-- Item Pengguna -->
-                        <li
-                            class="p-4 flex items-center justify-between hover:bg-gray-50 transition-colors duration-200">
-                            <div class="flex items-center space-x-4">
-                                <span class="text-lg font-semibold text-gray-500 w-6 text-center">5</span>
-                                <img class="w-12 h-12 rounded-full object-cover"
-                                    src="https://placehold.co/80x80/A7F3D0/047857?text=JB" alt="Avatar Pengguna">
-                                <div>
-                                    <p class="font-semibold text-gray-900">Jerome Bell</p>
-                                </div>
-                            </div>
-                            <span class="font-semibold text-indigo-600 text-lg">3,750 Poin</span>
-                        </li>
-                        <!-- Item Pengguna -->
-                        <li
-                            class="p-4 flex items-center justify-between hover:bg-gray-50 transition-colors duration-200">
-                            <div class="flex items-center space-x-4">
-                                <span class="text-lg font-semibold text-gray-500 w-6 text-center">6</span>
-                                <img class="w-12 h-12 rounded-full object-cover"
-                                    src="https://placehold.co/80x80/FBCFE8/9D2463?text=BS" alt="Avatar Pengguna">
-                                <div>
-                                    <p class="font-semibold text-gray-900">Brooklyn Simmons</p>
-                                </div>
-                            </div>
-                            <span class="font-semibold text-indigo-600 text-lg">3,500 Poin</span>
-                        </li>
-                        <!-- Item Pengguna -->
-                        <li
-                            class="p-4 flex items-center justify-between hover:bg-gray-50 transition-colors duration-200">
-                            <div class="flex items-center space-x-4">
-                                <span class="text-lg font-semibold text-gray-500 w-6 text-center">7</span>
-                                <img class="w-12 h-12 rounded-full object-cover"
-                                    src="https://placehold.co/80x80/FDE68A/92400E?text=EH" alt="Avatar Pengguna">
-                                <div>
-                                    <p class="font-semibold text-gray-900">Esther Howard</p>
-                                </div>
-                            </div>
-                            <span class="font-semibold text-indigo-600 text-lg">3,210 Poin</span>
-                        </li>
-                        <!-- Item Pengguna -->
-                        <li
-                            class="p-4 flex items-center justify-between hover:bg-gray-50 transition-colors duration-200">
-                            <div class="flex items-center space-x-4">
-                                <span class="text-lg font-semibold text-gray-500 w-6 text-center">8</span>
-                                <img class="w-12 h-12 rounded-full object-cover"
-                                    src="https://placehold.co/80x80/BAE6FD/0C4A6E?text=RF" alt="Avatar Pengguna">
-                                <div>
-                                    <p class="font-semibold text-gray-900">Robert Fox</p>
-                                </div>
-                            </div>
-                            <span class="font-semibold text-indigo-600 text-lg">3,150 Poin</span>
-                        </li>
+                                <span class="font-semibold text-indigo-600 text-lg">{{ number_format($user->point) }} Poin</span>
+                            </li>
+                        @endforeach
                     </ul>
                 </div>
             </main>
+            
         </div>
+        
         <footer class="bg-black text-gray-300">
             <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
