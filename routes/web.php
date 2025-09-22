@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\LikeController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Web3AuthController;
@@ -12,7 +13,7 @@ Route::get('/', function () {
 Route::get('/dashboard', [PostController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
-    
+
 // Web3 / Metamask Authentication
 Route::prefix('eth')->group(function () {
     Route::get('/signature', [Web3AuthController::class, 'signature']);
@@ -25,6 +26,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
+
+    Route::post('/posts/{post}/toggle-like', [LikeController::class, 'toggleLike'])->name('posts.like');
 
 });
 
