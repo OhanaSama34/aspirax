@@ -2,11 +2,8 @@
 
 namespace App\Models;
 
-use App\Models\Like;
-use App\Models\User;
-use App\Models\Reply;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
@@ -16,6 +13,7 @@ class Post extends Model
         'user_id',
         'content',
         'institution',
+        'status',
     ];
 
     public function user()
