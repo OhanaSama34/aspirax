@@ -118,7 +118,7 @@
     <div id="app-wrapper">
         <header class="py-6 relative z-10 container mx-auto px-4">
             <nav class="flex justify-between items-center">
-                <a href="#" class="flex items-center space-x-2">
+                <a href="/" class="flex items-center space-x-2">
                     <svg class="w-8 h-8 text-black" viewBox="0 0 24 24" fill="none"
                         xmlns="http://www.w3.org/2000/svg">
                         <path
@@ -130,7 +130,7 @@
 
                 <!-- Navigation Links (Desktop) -->
                 <div class="hidden md:flex items-center space-x-4 md:space-x-6">
-                    <a href="#" class="text-sm font-medium text-gray-600 hover:text-black transition-colors">
+                    <a href="/leaderboard" class="text-sm font-medium text-gray-600 hover:text-black transition-colors">
                         Leaderboard
                     </a>
                     <a href="#" class="text-sm font-medium text-gray-600 hover:text-black transition-colors">
@@ -197,7 +197,7 @@
                 #KritikAsikTanpaTerusik
             </p>
 
-            <a href="#"
+            <a href="/login"
                 class="mt-10 inline-flex items-center gap-2 bg-black text-white font-semibold rounded-lg px-8 py-3 hover:bg-gray-800 transition-all duration-300 transform hover:scale-105 animate-bounce"
                 style="animation-delay: 0.5s;">
                 <svg class="w-5 h-5 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
