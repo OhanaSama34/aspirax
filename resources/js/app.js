@@ -13,7 +13,7 @@ window.Web3 = Web3;
 
 document.addEventListener("DOMContentLoaded", () => {
     const metaMaskLoginButtons = document.querySelectorAll(
-        "#metamask-login-desktop, #metamask-login-mobile"
+        "#metamask-login-desktop, #metamask-login-mobile, #metamask-login-page"
     );
 
     metaMaskLoginButtons.forEach((metaMaskLoginButton) => {
@@ -21,9 +21,12 @@ document.addEventListener("DOMContentLoaded", () => {
             console.log("Button clicked:", metaMaskLoginButton.id);
 
             const errorBoxId =
-                metaMaskLoginButton.id === "metamask-login-desktop"
+                metaMaskLoginButton.id === "metamask-login-desktop" ||
+                metaMaskLoginButton.id === "metamask-login-page"
                     ? "metamask-error-desktop"
-                    : "metamask-error-mobile";
+                    : metaMaskLoginButton.id === "metamask-login-mobile"
+                    ? "metamask-error-mobile"
+                    : "metamask-error-page";
             const errorBox = document.getElementById(errorBoxId);
 
             // 🚨 Cek MetaMask

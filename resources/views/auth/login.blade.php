@@ -50,16 +50,17 @@
                     @endif
 
                     <!-- MetaMask Login Button -->
-                    <div class="mt-4">
-                        <button id="metamask-login"
-                                type="button"
-                                data-signature-url="{{ url('/eth/signature') }}"
-                                data-authenticate-url="{{ url('/eth/authenticate') }}"
-                                data-redirect-url="{{ route('dashboard') }}"
-                                class="w-full inline-flex items-center justify-center text-sm font-semibold bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-full shadow-sm transition">
+                    <div>
+                        <meta name="csrf-token" content="{{ csrf_token() }}">
+                        <button id="metamask-login-page" type="button"
+                            data-signature-url="{{ url('/eth/signature') }}"
+                            data-authenticate-url="{{ url('/eth/authenticate') }}"
+                            data-redirect-url="{{ route('dashboard') }}"
+                            class="text-sm font-semibold bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-full shadow-sm transition">
                             🔗 Login with MetaMask
                         </button>
-                        <div id="metamask-error" class="hidden mt-4 p-2 text-sm text-red-600 bg-red-100 rounded"></div>
+                        <div id="metamask-error-page"
+                            class="hidden mt-4 p-2 text-sm text-red-600 bg-red-100 rounded"></div>
                     </div>
 
                     <p class="text-center text-xs text-gray-500 mt-8">
@@ -88,93 +89,7 @@
         </div>
     </div>
 
-    {{-- <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const loginButton = document.getElementById('metamask-login');
-            const errorDiv = document.getElementById('metamask-error');
-
-            const showError = (message) => {
-                errorDiv.textContent = message;
-                errorDiv.classList.remove('hidden');
-            };
-
-            const hideError = () => {
-                errorDiv.classList.add('hidden');
-            };
-
-            const handleLogin = async () => {
-                hideError();
-
-                // 1. Check if MetaMask is installed
-                if (typeof window.ethereum === 'undefined') {
-                    showError(
-                        'MetaMask tidak terinstal. Silakan install ekstensi MetaMask untuk melanjutkan.'
-                        );
-                    return;
-                }
-
-                try {
-                    // 2. Request account access
-                    const accounts = await window.ethereum.request({
-                        method: 'eth_requestAccounts'
-                    });
-                    const publicAddress = accounts[0];
-
-                    // 3. Get message to sign from the server
-                    const signatureUrl = loginButton.dataset.signatureUrl;
-                    const signatureResponse = await fetch(`${signatureUrl}?address=${publicAddress}`);
-
-                    if (!signatureResponse.ok) {
-                        throw new Error('Gagal mendapatkan pesan untuk ditandatangani dari server.');
-                    }
-
-                    const messageToSign = await signatureResponse.text();
-
-                    // 4. Request user to sign the message
-                    const signature = await window.ethereum.request({
-                        method: 'personal_sign',
-                        params: [messageToSign, publicAddress],
-                    });
-
-                    // 5. Authenticate with the server
-                    const authenticateUrl = loginButton.dataset.authenticateUrl;
-                    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute(
-                        'content');
-
-                    const authResponse = await fetch(authenticateUrl, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': csrfToken,
-                        },
-                        body: JSON.stringify({
-                            address: publicAddress,
-                            signature: signature,
-                        }),
-                    });
-
-                    if (!authResponse.ok) {
-                        const errorData = await authResponse.json();
-                        throw new Error(errorData.message || 'Autentikasi gagal.');
-                    }
-
-                    // 6. Redirect on successful login
-                    window.location.href = loginButton.dataset.redirectUrl;
-
-                } catch (error) {
-                    console.error('Login error:', error);
-                    // Handle specific user rejection error
-                    if (error.code === 4001) {
-                        showError('Anda membatalkan permintaan koneksi atau tanda tangan.');
-                    } else {
-                        showError(error.message || 'Terjadi kesalahan saat proses login.');
-                    }
-                }
-            };
-
-            loginButton.addEventListener('click', handleLogin);
-        });
-    </script> --}}
+    @vite(['resources/js/app.js'])
 </body>
 
 </html>
