@@ -23,6 +23,10 @@ class ContentModeration
         }
 
         try {
+            // Collect advisory matches from local CSV (do not block solely on this)
+            $abusiveMatches = $this->matchAbusiveTerms($text);
+
+            // Call Gemini for nuanced detection (primary decision source)
             // Follow the reference approach: prompt the generative model to return a strict JSON decision
             $endpoint = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent';
 
@@ -109,9 +113,18 @@ EOT;
                 $reason = isset($parsed['reason']) && is_string($parsed['reason']) ? $parsed['reason'] : '';
 
                 if ($decision === 'BLOCK') {
+                    // Merge Gemini labels with advisory CSV matches (unique)
+                    $reasons = !empty($labels) ? $labels : ($reason ? [$reason] : ['Hate speech detected']);
+                    if (!empty($abusiveMatches)) {
+                        foreach ($abusiveMatches as $term) {
+                            if (!in_array($term, $reasons, true)) {
+                                $reasons[] = $term;
+                            }
+                        }
+                    }
                     return [
                         'isHateSpeech' => true,
-                        'reasons' => !empty($labels) ? $labels : ($reason ? [$reason] : ['Hate speech detected']),
+                        'reasons' => $reasons,
                     ];
                 }
 
@@ -129,6 +142,49 @@ EOT;
                 'reasons' => [],
             ];
         }
+    }
+
+    /**
+     * Loads abusive terms from CSV and returns any that are found in the given text.
+     * A simple case-insensitive substring check is used for robustness.
+     * CSV format: one term per line, optionally with category/notes separated by comma.
+     * Returns array of matched terms.
+     */
+    private function matchAbusiveTerms(string $text): array
+    {
+        static $terms = null;
+        if ($terms === null) {
+            $terms = [];
+            $csvPath = resource_path('data/abusive.csv');
+            if (is_readable($csvPath)) {
+                $lines = @file($csvPath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) ?: [];
+                foreach ($lines as $line) {
+                    $line = trim($line);
+                    if ($line === '' || str_starts_with($line, '#')) {
+                        continue;
+                    }
+                    // Split on first comma to get the term; allow additional columns
+                    $parts = explode(',', $line, 2);
+                    $term = trim($parts[0]);
+                    if ($term !== '') {
+                        $terms[] = mb_strtolower($term);
+                    }
+                }
+            }
+        }
+
+        if (empty($terms)) {
+            return [];
+        }
+
+        $textLower = mb_strtolower($text);
+        $found = [];
+        foreach ($terms as $term) {
+            if ($term !== '' && str_contains($textLower, $term)) {
+                $found[$term] = $term;
+            }
+        }
+        return $found;
     }
 }
 
