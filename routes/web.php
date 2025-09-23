@@ -7,7 +7,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Web3AuthController;
 use App\Http\Controllers\ReplyController;
 use App\Http\Controllers\LeaderboardUser;
-use App\Http\Controllers\Statistic;
+
 use App\Http\Controllers\AspiroBot;
 
 Route::get('/', function () {
@@ -15,13 +15,10 @@ Route::get('/', function () {
 });
 
 Route::get('/leaderboard', [LeaderboardUser::class, 'index']);
-Route::get('/aspiro', [Statistic::class, 'index']);
-Route::get('/statistic', [AspiroBot::class, 'index']);
-
+Route::get('/aspiro', [AspiroBot::class, 'index']);
 Route::get('/dashboard', [PostController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
-
 // Web3 / Metamask Authentication
 Route::prefix('eth')->group(function () {
     Route::get('/signature', [Web3AuthController::class, 'signature']);
@@ -40,8 +37,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/posts/{post}', [ReplyController::class, 'show'])->name('posts.show');
     Route::post('/posts/{post}/reply', [ReplyController::class, 'store'])->name('posts.reply');
     Route::get('/posts/{post}/replies', [ReplyController::class, 'replies'])->name('posts.replies');
-
-
 });
 
 require __DIR__.'/auth.php';

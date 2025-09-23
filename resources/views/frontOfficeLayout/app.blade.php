@@ -5,15 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AspiraX</title>
-
     <!-- Impor Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-
     <!-- Impor Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-
     <style>
         /* Menambahkan font kustom */
         body {
@@ -111,6 +108,23 @@
             opacity: 1;
             transform: translateY(0);
         }
+
+        /* Kelas untuk pseudo-element ::before */
+        .bg-blur::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            /* Ganti URL ini dengan path gambar Anda */
+            background-image: url('{{ asset('storage/images/bg-fix.svg') }}');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            filter: blur(2px);
+            z-index: -1;
+        }
     </style>
 </head>
 
@@ -130,29 +144,40 @@
 
                 <!-- Navigation Links (Desktop) -->
                 <div class="hidden md:flex items-center space-x-4 md:space-x-6">
-                    <a href="#" class="text-sm font-medium text-gray-600 hover:text-black transition-colors">
+                    <a href="/leaderboard" class="text-sm font-medium text-gray-600 hover:text-black transition-colors">
                         Leaderboard
                     </a>
-                    <a href="#" class="text-sm font-medium text-gray-600 hover:text-black transition-colors">
-                        Statistics
-                    </a>
-                    <a href="#" class="text-sm font-medium text-gray-600 hover:text-black transition-colors">
+                    <a href="/aspiro" class="text-sm font-medium text-gray-600 hover:text-black transition-colors">
                         Aspiro
                     </a>
 
+                    @guest
+                        <div>
+                            <meta name="csrf-token" content="{{ csrf_token() }}">
+                            <button id="metamask-login-desktop" type="button"
+                                data-signature-url="{{ url('/eth/signature') }}"
+                                data-authenticate-url="{{ url('/eth/authenticate') }}"
+                                data-redirect-url="{{ route('dashboard') }}"
+                                class="text-sm font-semibold bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-full shadow-sm transition">
+                                🔗 Login with MetaMask
+                            </button>
+                            <div id="metamask-error-desktop"
+                                class="hidden mt-4 p-2 text-sm text-red-600 bg-red-100 rounded"></div>
+                        </div>
+                    @endguest
+
+                    @auth
+                        <!-- Navigation Links -->
+                        <div class="hidden sm:-my-px sm:ms-10 sm:flex">
+                            <a href="{{ route('dashboard') }}"
+                                class="text-sm font-semibold bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-full shadow-sm transition {{ request()->routeIs('dashboard') ? 'ring-2 ring-orange-400' : '' }}">
+                                Dashboard
+                            </a>
+                        </div>
+
+                    @endauth
                     <!-- MetaMask Login Button -->
-                    <div>
-                        <meta name="csrf-token" content="{{ csrf_token() }}">
-                        <button id="metamask-login-desktop" type="button"
-                            data-signature-url="{{ url('/eth/signature') }}"
-                            data-authenticate-url="{{ url('/eth/authenticate') }}"
-                            data-redirect-url="{{ route('dashboard') }}"
-                            class="text-sm font-semibold bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg shadow-sm transition">
-                            🔗 Login with MetaMask
-                        </button>
-                        <div id="metamask-error-desktop"
-                            class="hidden mt-4 p-2 text-sm text-red-600 bg-red-100 rounded"></div>
-                    </div>
+
                 </div>
 
                 <!-- Hamburger Button (Mobile) -->
@@ -181,8 +206,9 @@
             </div>
         </header>
 
-        
-                
+        @yield('content')
+
+        <!-- Bagian Footer -->
         <footer class="bg-black text-gray-300">
             <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-8">

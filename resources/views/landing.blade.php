@@ -1,210 +1,33 @@
-<!DOCTYPE html>
-<html lang="id">
+@extends('frontOfficeLayout.app')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AspiraX</title>
-
-    <!-- Impor Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-
-    <!-- Impor Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-    <style>
-        /* Menambahkan font kustom */
-        body {
-            font-family: 'Poppins', sans-serif;
-            scroll-behavior: smooth;
-        }
-
-        .font-display {
-            font-family: 'Times New Roman', Times, serif;
-        }
-
-        /* Animasi Masuk untuk Konten */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .animate-fadeInUp {
-            animation: fadeInUp 0.7s ease-out forwards;
-            opacity: 0;
-            /* Mulai dalam keadaan tersembunyi */
-        }
-
-        /* Animasi kursor mengetik */
-        .cursor {
-            display: inline-block;
-            width: 4px;
-            background-color: #333;
-            margin-left: 8px;
-            animation: blink 1s infinite;
-        }
-
-        @keyframes blink {
-            0% {
-                background-color: #333;
-            }
-
-            49% {
-                background-color: #333;
-            }
-
-            50% {
-                background-color: transparent;
-            }
-
-            99% {
-                background-color: transparent;
-            }
-
-            100% {
-                background-color: #333;
-            }
-        }
-
-        #globeViz canvas {
-            outline: none;
-        }
-
-        /* Custom animation for horizontal scroll */
-        @keyframes scroll {
-            0% {
-                transform: translateX(0);
-            }
-
-            100% {
-                transform: translateX(-50%);
-            }
-        }
-
-        .animate-scrolling {
-            animation: scroll 30s linear infinite;
-        }
-
-        /* Animation for tab content fade-in */
-        .tab-content {
-            transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
-        }
-
-        .tab-content.hidden {
-            opacity: 0;
-            transform: translateY(10px);
-            position: absolute;
-            /* Prevent layout shift */
-            pointer-events: none;
-        }
-
-        .tab-content.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    </style>
-</head>
-
-<body class="bg-white text-gray-900">
-    <div id="app-wrapper">
-        <header class="py-6 relative z-10 container mx-auto px-4">
-            <nav class="flex justify-between items-center">
-                <a href="/" class="flex items-center space-x-2">
-                    <svg class="w-8 h-8 text-black" viewBox="0 0 24 24" fill="none"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M8.5 12.5H8.51M11.5 12.5H11.51M14.5 12.5H14.51M4 21.8V5.2C4 4.0799 4 3.51984 4.21799 3.09202C4.40973 2.71569 4.71569 2.40973 5.09202 2.21799C5.51984 2 6.0799 2 7.2 2H16.8C17.9201 2 18.4802 2 18.908 2.21799C19.2843 2.40973 19.5903 2.71569 19.782 3.09202C20 3.51984 20 4.0799 20 5.2V14.8C20 15.9201 20 16.4802 19.782 16.908C19.5903 17.2843 19.2843 17.5903 18.908 17.782C18.4802 18 17.9201 18 16.8 18H8L4 21.8Z"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                    </svg>
-                    <span class="font-bold text-xl text-black">AspiraX</span>
-                </a>
-
-                <!-- Navigation Links (Desktop) -->
-                <div class="hidden md:flex items-center space-x-4 md:space-x-6">
-                    <a href="/leaderboard" class="text-sm font-medium text-gray-600 hover:text-black transition-colors">
-                        Leaderboard
-                    </a>
-                    <a href="#" class="text-sm font-medium text-gray-600 hover:text-black transition-colors">
-                        Statistics
-                    </a>
-                    <a href="#" class="text-sm font-medium text-gray-600 hover:text-black transition-colors">
-                        Aspiro
-                    </a>
-
-                    <!-- MetaMask Login Button -->
-                    <div>
-                        <meta name="csrf-token" content="{{ csrf_token() }}">
-                        <button id="metamask-login-desktop" type="button"
-                            data-signature-url="{{ url('/eth/signature') }}"
-                            data-authenticate-url="{{ url('/eth/authenticate') }}"
-                            data-redirect-url="{{ route('dashboard') }}"
-                            class="text-sm font-semibold bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg shadow-sm transition">
-                            🔗 Login with MetaMask
-                        </button>
-                        <div id="metamask-error-desktop"
-                            class="hidden mt-4 p-2 text-sm text-red-600 bg-red-100 rounded"></div>
-                    </div>
-                </div>
-
-                <!-- Hamburger Button (Mobile) -->
-                <div class="md:hidden flex items-center">
-                    <button id="hamburger-button" class="focus:outline-none">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M4 6h16M4 12h16m-7 6h7"></path>
-                        </svg>
-                    </button>
-                </div>
-            </nav>
-
-            <!-- Mobile Menu -->
-            <div id="mobile-menu" class="hidden md:hidden bg-white shadow-lg rounded-lg mt-2 p-4 absolute right-4 w-56">
-                <a href="#" class="block py-2 px-3 text-gray-600 hover:bg-gray-100 rounded">AspiroBot Edu</a>
-                <meta name="csrf-token" content="{{ csrf_token() }}">
-                <button id="metamask-login-mobile" type="button" data-signature-url="{{ url('/eth/signature') }}"
-                    data-authenticate-url="{{ url('/eth/authenticate') }}" data-redirect-url="{{ route('dashboard') }}"
-                    class="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-4 rounded-md shadow-sm transition">
-                    🔗 Login with MetaMask
-                </button>
-                <div id="metamask-error-mobile" class="hidden mt-4 p-2 text-sm text-red-600 bg-red-100 rounded"></div>
-
-            </div>
-        </header>
+@section('content')
 
         <!-- Main Content -->
-        <main class="min-h-screen flex flex-col items-center justify-center text-center container mx-auto px-4 -mt-22">
+        <main class="relative overflow-hidden min-h-screen flex flex-col items-center justify-center text-center container mx-auto px-4 bg-blur">
 
+        <div>
             <h1 id="headline" class="font-display font-bold text-5xl md:text-6xl lg:text-7xl leading-tight"
                 style="min-height: 168px;"></h1>
 
-            <p class="mt-6 max-w-xl text-gray-600 animate-fadeInUp" style="animation-delay: 0.3s;">
-                Sampaikan pemikiran dan kritik Anda dengan bebas tanpa rasa khawatir. Bagikan suara Anda, picu perubahan
-                yang berarti
+            <p class="mt-6 max-w-2-xl text-gray-800 animate-fadeInUp" style="animation-delay: 0.3s;">
+                Sampaikan pemikiran dan kritik Anda dengan bebas tanpa rasa khawatir.<br> Bagikan suara Anda, picu perubahan untuk hari esok.
             </p>
 
             <p class="font-display font-semibold text-2xl md:text-3xl mt-8 animate-fadeInUp"
                 style="animation-delay: 0.4s;">
-                #KritikAsikTanpaTerusik
+                #StaySafe #StaySecure
             </p>
 
             <a href="/login"
-                class="mt-10 inline-flex items-center gap-2 bg-black text-white font-semibold rounded-lg px-8 py-3 hover:bg-gray-800 transition-all duration-300 transform hover:scale-105 animate-bounce"
+                class="mt-10 inline-flex items-center gap-2 bg-black text-white font-semibold rounded-full px-8 py-3 hover:bg-gray-800 transition-all duration-300 transform hover:scale-105 animate-bounce"
                 style="animation-delay: 0.5s;">
                 <svg class="w-5 h-5 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                     <path d="M6 4l12 6-12 6V4z" />
                 </svg>
                 Start Your Opinion
             </a>
+        </div>
+            
         </main>
 
         <section class="w-full py-16 sm:py-20 md:py-24">
@@ -362,31 +185,102 @@
             </div>
         </section>
 
+        <!-- Stats Section -->
+        <section
+            class="relative bg-black flex flex-col items-center justify-center text-white overflow-hidden p-6 py-20">
+            <div class="z-10 flex flex-col items-center w-full max-w-6xl mx-auto">
+                <div class="text-center">
+                    <h1 class="text-4xl md:text-6xl font-black tracking-tight font-display">Bumi Yang Subur, Masalah
+                        Yang Makmur</h1>
+                    <p class="mt-4 max-w-3xl mx-auto text-lg text-gray-300">
+                        Kekayaan alam melimpah tidak otomatis membuat bangsa sejahtera, bila korupsi dan salah kelola
+                        terus dibiarkan.
+                    </p>
+                </div>
+                <div
+                    class="mt-12 mb-10 w-full max-w-5xl rounded-2xl shadow-2xl overflow-hidden border-2 border-gray-700">
+                    <img src="{{ asset('storage/images/kabinet.jpg') }}"
+                        alt="Foto kabinet pemerintahan Indonesia di tangga istana negara"
+                        class="w-full h-auto object-cover">
+                </div>
+                <div class="grid grid-cols-2 md:grid-cols-5 gap-8 w-full max-w-5xl text-center">
+                    <div class="stat-item">
+                        <span class="text-4xl md:text-5xl font-bold">17.000+</span>
+                        <span class="block mt-2 text-sm text-gray-400 uppercase tracking-wider">Pulau</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="text-4xl md:text-5xl font-bold">100+</span>
+                        <span class="block mt-2 text-sm text-gray-400 uppercase tracking-wider">Pejabat Tinggi</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="text-4xl md:text-5xl font-bold">2.500+</span>
+                        <span class="block mt-2 text-sm text-gray-400 uppercase tracking-wider">Kasus Korupsi</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="text-4xl md:text-5xl font-bold">9.105 T</span>
+                        <span class="block mt-2 text-sm text-gray-400 uppercase tracking-wider">Hutang Negara</span>
+                    </div>
+                    <div class="hidden md:block stat-item">
+                        <span class="text-4xl md:text-5xl font-bold">?</span>
+                        <span class="block mt-2 text-sm text-gray-400 uppercase tracking-wider">Masa Depan</span>
+                    </div>
+                </div>
+                <p class="mt-12 text-center italic text-gray-400 max-w-3xl">
+                    "Kita seolah-olah merayakan demokrasi, tetapi memotong lidah orang-orang yang berani menyatakan
+                    pendapat mereka yang merugikan pemerintah."
+                </p>
+                <button
+                    class="mt-8 px-8 py-3 bg-white text-gray-900 font-bold rounded-full hover:bg-gray-200 transition-colors duration-300">
+                    Discover News
+                </button>
+            </div>
+            <div class="absolute bottom-0 left-0 w-full bg-black/30 backdrop-blur-sm py-4 overflow-hidden">
+                <div class="flex animate-scrolling">
+                    <div class="flex-shrink-0 flex items-center w-full justify-around text-xl font-bold text-gray-200">
+                        <span class="mx-8">Ibu Pertiwi</span> <span class="text-gray-500">*</span>
+                        <span class="mx-8">Nusantara</span> <span class="text-gray-500">*</span>
+                        <span class="mx-8">Negeri Seribu Pulau</span> <span class="text-gray-500">*</span>
+                        <span class="mx-8">Negeri Zamrud Khatulistiwa</span> <span class="text-gray-500">*</span>
+                        <span class="mx-8">Macan Asia Yang Tertidur</span> <span class="text-gray-500">*</span>
+                    </div>
+                    <div class="flex-shrink-0 flex items-center w-full justify-around text-xl font-bold text-gray-200">
+                        <span class="mx-8">Ibu Pertiwi</span> <span class="text-gray-500">*</span>
+                        <span class="mx-8">Nusantara</span> <span class="text-gray-500">*</span>
+                        <span class="mx-8">Negeri Seribu Pulau</span> <span class="text-gray-500">*</span>
+                        <span class="mx-8">Negeri Zamrud Khatulistiwa</span> <span class="text-gray-500">*</span>
+                        <span class="mx-8">Macan Asia Yang Tertidur</span> <span class="text-gray-500">*</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- Inserted Gallery Section -->
         <section class="w-full bg-black text-white flex flex-col overflow-hidden">
             <div class="w-full h-[40vh] md:h-[50vh] whitespace-nowrap overflow-hidden">
                 <div class="h-full w-max flex animate-scrolling">
-                    <img src="{{ asset('storage/images/Demo-Mahasiswa-Duduki-Gedung-MPR-Mei-1998.jpg') }}" alt="Demonstrasi publik di Indonesia"
-                        alt="Demonstrasi publik di Indonesia" class="h-full w-auto object-cover grayscale">
+                    <img src="{{ asset('storage/images/Demo-Mahasiswa-Duduki-Gedung-MPR-Mei-1998.jpg') }}"
+                        alt="Demonstrasi publik di Indonesia" alt="Demonstrasi publik di Indonesia"
+                        class="h-full w-auto object-cover grayscale">
                     <img src="{{ asset('storage/images/buruh.jpg') }}" alt="Barisan aparat kepolisian"
                         class="h-full w-auto object-cover grayscale">
                     <img src="{{ asset('storage/images/aparat.jpg') }}" alt="Menyuarakan opini dengan megafon"
                         class="h-full w-auto object-cover grayscale">
-                    <img src="{{ asset('storage/images/Aksi-Kamisan-ke-815-160524-Bay-5.jpg') }}" alt="Kepalan tangan sebagai simbol perlawanan"
-                        class="h-full w-auto object-cover grayscale">
+                    <img src="{{ asset('storage/images/Aksi-Kamisan-ke-815-160524-Bay-5.jpg') }}"
+                        alt="Kepalan tangan sebagai simbol perlawanan" class="h-full w-auto object-cover grayscale">
                     <img src="{{ asset('storage/images/1330134_720.jpg') }}" alt="Mahasiswa melakukan aksi protes"
                         class="h-full w-auto object-cover grayscale">
                     <img src="{{ asset('storage/images/images (2).jpg') }}" alt="Aparat dalam formasi"
                         class="h-full w-auto object-cover grayscale">
 
-                    <img src="{{ asset('storage/images/Demo-Mahasiswa-Duduki-Gedung-MPR-Mei-1998.jpg') }}" alt="Demonstrasi publik di Indonesia"
-                        alt="Demonstrasi publik di Indonesia" class="h-full w-auto object-cover grayscale">
+                    <img src="{{ asset('storage/images/Demo-Mahasiswa-Duduki-Gedung-MPR-Mei-1998.jpg') }}"
+                        alt="Demonstrasi publik di Indonesia" alt="Demonstrasi publik di Indonesia"
+                        class="h-full w-auto object-cover grayscale">
                     <img src="{{ asset('storage/images/buruh.jpg') }}" alt="Barisan aparat kepolisian"
                         class="h-full w-auto object-cover grayscale">
                     <img src="{{ asset('storage/images/aparat.jpg') }}" alt="Menyuarakan opini dengan megafon"
                         class="h-full w-auto object-cover grayscale">
-                    <img src="{{ asset('storage/images/Aksi-Kamisan-ke-815-160524-Bay-5.jpg') }}" alt="Kepalan tangan sebagai simbol perlawanan"
-                        class="h-full w-auto object-cover grayscale">
+                    <img src="{{ asset('storage/images/Aksi-Kamisan-ke-815-160524-Bay-5.jpg') }}"
+                        alt="Kepalan tangan sebagai simbol perlawanan" class="h-full w-auto object-cover grayscale">
                     <img src="{{ asset('storage/images/1330134_720.jpg') }}" alt="Mahasiswa melakukan aksi protes"
                         class="h-full w-auto object-cover grayscale">
                     <img src="{{ asset('storage/images/images (2).jpg') }}" alt="Aparat dalam formasi"
@@ -419,138 +313,22 @@
             </div>
         </section>
 
-        <!-- Stats Section -->
-        <section class="relative bg-black flex flex-col items-center justify-center text-white overflow-hidden p-6 py-20">
-            <div class="z-10 flex flex-col items-center w-full max-w-6xl mx-auto">
-                <div class="text-center">
-                    <h1 class="text-4xl md:text-6xl font-black tracking-tight font-display">Bumi Yang Subur, Masalah Yang Makmur</h1>
-                    <p class="mt-4 max-w-3xl mx-auto text-lg text-gray-300">
-                        Kekayaan alam melimpah tidak otomatis membuat bangsa sejahtera, bila korupsi dan salah kelola terus dibiarkan.
-                    </p>
-                </div>
-                <div class="mt-12 mb-10 w-full max-w-5xl rounded-2xl shadow-2xl overflow-hidden border-2 border-gray-700">
-                    <img src="{{ asset('storage/images/kabinet.jpg') }}"
-                        alt="Foto kabinet pemerintahan Indonesia di tangga istana negara"
-                        class="w-full h-auto object-cover">
-                </div>
-                <div class="grid grid-cols-2 md:grid-cols-5 gap-8 w-full max-w-5xl text-center">
-                    <div class="stat-item">
-                        <span class="text-4xl md:text-5xl font-bold">17.000+</span>
-                        <span class="block mt-2 text-sm text-gray-400 uppercase tracking-wider">Pulau</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="text-4xl md:text-5xl font-bold">100+</span>
-                        <span class="block mt-2 text-sm text-gray-400 uppercase tracking-wider">Pejabat Tinggi</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="text-4xl md:text-5xl font-bold">2.500+</span>
-                        <span class="block mt-2 text-sm text-gray-400 uppercase tracking-wider">Kasus Korupsi</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="text-4xl md:text-5xl font-bold">9.105 T</span>
-                        <span class="block mt-2 text-sm text-gray-400 uppercase tracking-wider">Hutang Negara</span>
-                    </div>
-                    <div class="hidden md:block stat-item">
-                        <span class="text-4xl md:text-5xl font-bold">?</span>
-                        <span class="block mt-2 text-sm text-gray-400 uppercase tracking-wider">Masa Depan</span>
-                    </div>
-                </div>
-                <p class="mt-12 text-center italic text-gray-400 max-w-3xl">
-                    "Kita seolah-olah merayakan demokrasi, tetapi memotong lidah orang-orang yang berani menyatakan pendapat mereka yang merugikan pemerintah."
-                </p>
-                <button
-                    class="mt-8 px-8 py-3 bg-white text-gray-900 font-bold rounded-full hover:bg-gray-200 transition-colors duration-300">
-                    Discover News
-                </button>
-            </div>
-            <div class="absolute bottom-0 left-0 w-full bg-black/30 backdrop-blur-sm py-4 overflow-hidden">
-                <div class="flex animate-scrolling">
-                    <div class="flex-shrink-0 flex items-center w-full justify-around text-xl font-bold text-gray-200">
-                        <span class="mx-8">Ibu Pertiwi</span> <span class="text-gray-500">*</span>
-                        <span class="mx-8">Nusantara</span> <span class="text-gray-500">*</span>
-                        <span class="mx-8">Negeri Seribu Pulau</span> <span class="text-gray-500">*</span>
-                        <span class="mx-8">Negeri Zamrud Khatulistiwa</span> <span class="text-gray-500">*</span>
-                        <span class="mx-8">Macan Asia Yang Tertidur</span> <span class="text-gray-500">*</span>
-                    </div>
-                    <div class="flex-shrink-0 flex items-center w-full justify-around text-xl font-bold text-gray-200">
-                        <span class="mx-8">Ibu Pertiwi</span> <span class="text-gray-500">*</span>
-                        <span class="mx-8">Nusantara</span> <span class="text-gray-500">*</span>
-                        <span class="mx-8">Negeri Seribu Pulau</span> <span class="text-gray-500">*</span>
-                        <span class="mx-8">Negeri Zamrud Khatulistiwa</span> <span class="text-gray-500">*</span>
-                        <span class="mx-8">Macan Asia Yang Tertidur</span> <span class="text-gray-500">*</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-        
-        {{-- <!-- Globe Section -->
+        <!-- Globe Network Section -->
         <section id="globe-section"
-            class="relative py-20 bg-gray-800 text-white overflow-hidden min-h-[600px] flex flex-col justify-center">
+            class="relative py-14 bg-gray-800 text-white overflow-hidden min-h-[450px] flex flex-col justify-center">
             <div id="globeViz" class="absolute top-0 left-0 w-full h-full z-0 opacity-70"></div>
             <div class="container mx-auto px-4 text-center relative z-10">
                 <h2 class="font-display text-4xl font-bold mb-4">Jangkauan Luas</h2>
                 <p class="text-gray-300 max-w-2xl mx-auto">
                     Lihat bagaimana aspirasi serupa disuarakan di seluruh Indonesia bahkan dunia, menghubungkan ide-ide
-                    untuk perubahan
-                    global secara real-time.
+                    untuk perubahan di Indonesia
                 </p>
             </div>
-        </section> --}}
-
-        <!-- ===== Bagian Footer ===== -->
-        <footer class="bg-black text-gray-300">
-            <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                    <div class="md:col-span-2">
-                        <a href="#" class="flex items-center space-x-2">
-                            <svg class="w-8 h-8 text-white" viewBox="0 0 24 24" fill="none"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="M8.5 12.5H8.51M11.5 12.5H11.51M14.5 12.5H14.51M4 21.8V5.2C4 4.0799 4 3.51984 4.21799 3.09202C4.40973 2.71569 4.71569 2.40973 5.09202 2.21799C5.51984 2 6.0799 2 7.2 2H16.8C17.9201 2 18.4802 2 18.908 2.21799C19.2843 2.40973 19.5903 2.71569 19.782 3.09202C20 3.51984 20 4.0799 20 5.2V14.8C20 15.9201 20 16.4802 19.782 16.908C19.5903 17.2843 19.2843 17.5903 18.908 17.782C18.4802 18 17.9201 18 16.8 18H8L4 21.8Z"
-                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round" />
-                            </svg>
-                            <span class="font-bold text-xl text-white">AspiraX</span>
-                        </a>
-                        <p class="mt-4 max-w-md">
-                            Bergabunglah dengan AspiraX dan jadilah bagian dari gerakan perubahan yang lebih besar.
-                            Suara Anda adalah kekuatan untuk masa depan yang lebih baik.
-                        </p>
-                        <div class="mt-6 flex space-x-4">
-                            <a href="#" class="text-gray-400 hover:text-white">
-                                <span class="sr-only">YouTube</span>
-                                <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                                    <path fill-rule="evenodd"
-                                        d="M19.812 5.418c.861.23 1.538.907 1.768 1.768C21.998 8.78 22 12 22 12s0 3.22-.42 4.814a2.506 2.506 0 0 1-1.768 1.768c-1.594.42-7.812.42-7.812.42s-6.218 0-7.812-.42a2.506 2.506 0 0 1-1.768-1.768C2 15.22 2 12 2 12s0-3.22.42-4.814a2.506 2.506 0 0 1 1.768-1.768C5.782 5 12 5 12 5s6.218 0 7.812.418ZM9.94 15.582V8.418L15.822 12 9.94 15.582Z"
-                                        clip-rule="evenodd" />
-                                </svg>
-                            </a>
-
-                        </div>
-                    </div>
-                    <div>
-                        <h3 class="text-sm font-semibold tracking-wider uppercase text-white">AspiraX</h3>
-                        <ul class="mt-4 space-y-4">
-                            <li><a href="#" class="hover:text-white">FAQ</a></li>
-                            <li><a href="#" class="hover:text-white">Bantuan</a></li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h3 class="text-sm font-semibold tracking-wider uppercase text-white">Tentang Kami</h3>
-                        <ul class="mt-4 space-y-4">
-                            <li><a href="#" class="hover:text-white">Fitur</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="mt-8 border-t border-gray-700 pt-8 text-center text-sm">
-                    <p>&copy; 2025 AspiraX. All rights reserved.</p>
-                </div>
-            </div>
-        </footer>
+        </section>
     </div>
 
-    @vite(['resources/js/app.js'])
-    <script>
+        @vite(['resources/js/app.js'])
+     <script>
         document.addEventListener('DOMContentLoaded', () => {
             // JavaScript untuk handle klik menu hamburger
             const hamburgerButton = document.getElementById('hamburger-button');
@@ -571,7 +349,12 @@
             // JavaScript untuk animasi mengetik
             const headlineEl = document.getElementById('headline');
             if (headlineEl) {
-                const textToType = '"Kritik Asik Tanpa <br> Harus Terusik"';
+                // Array of texts to be typed
+                const textsToType = [
+                    'Kritik Asik Tanpa <br> Harus Terusik',
+                    'Indonesian First Web3 <br> Public Aspiration Platform'
+                ];
+                
                 const content = document.createElement('span');
                 headlineEl.appendChild(content);
 
@@ -580,31 +363,33 @@
                 cursor.style.height = getComputedStyle(headlineEl).fontSize;
                 headlineEl.appendChild(cursor);
 
-                let textIndex = 0;
-                const typingSpeed = 100;
+                let phraseIndex = 0; // To track which phrase we are on
+                let textIndex = 0; // To track which character we are on
+                const typingSpeed = 80;
                 const erasingSpeed = 50;
                 const delayBeforeErase = 2000;
                 const delayBeforeTyping = 500;
 
                 function typeWriter() {
-                    if (textIndex < textToType.length) {
-                        if (textToType.substring(textIndex, textIndex + 4) === '<br>') {
+                    const currentText = textsToType[phraseIndex];
+                    if (textIndex < currentText.length) {
+                        if (currentText.substring(textIndex, textIndex + 4) === '<br>') {
                             content.innerHTML += '<br>';
                             textIndex += 4;
                         } else {
-                            content.innerHTML += textToType.charAt(textIndex);
+                            content.innerHTML += currentText.charAt(textIndex);
                             textIndex++;
                         }
                         setTimeout(typeWriter, typingSpeed);
                     } else {
-                        // Selesai mengetik, tunggu lalu mulai hapus
+                        // Finished typing, wait then start erasing
                         setTimeout(eraseText, delayBeforeErase);
                     }
                 }
 
                 function eraseText() {
                     if (content.innerHTML.length > 0) {
-                        // Handle tag <br> yang panjangnya 4 karakter
+                        // Handle <br> tag which has 4 characters
                         if (content.innerHTML.slice(-4) === '<br>') {
                             content.innerHTML = content.innerHTML.slice(0, -4);
                         } else {
@@ -612,12 +397,15 @@
                         }
                         setTimeout(eraseText, erasingSpeed);
                     } else {
-                        // Selesai menghapus, reset index dan mulai mengetik lagi
+                        // Finished erasing, move to the next phrase and start typing again
                         textIndex = 0;
+                        phraseIndex = (phraseIndex + 1) % textsToType.length; // Loop back to the start
                         setTimeout(typeWriter, delayBeforeTyping);
                     }
                 }
-                setTimeout(typeWriter, delayBeforeTyping); // Mulai animasi
+
+                // Start the animation
+                setTimeout(typeWriter, delayBeforeTyping);
             }
 
             // JavaScript for How It Works Tabs
@@ -625,21 +413,9 @@
             const contents = document.querySelectorAll('.tab-content');
 
             const activeColors = {
-                '#step1': {
-                    bg: 'bg-gray-500',
-                    text: 'text-white',
-                    shadow: 'shadow-md'
-                },
-                '#step2': {
-                    bg: 'bg-green-600',
-                    text: 'text-white',
-                    shadow: 'shadow-md'
-                },
-                '#step3': {
-                    bg: 'bg-pink-600',
-                    text: 'text-white',
-                    shadow: 'shadow-md'
-                }
+                '#step1': { bg: 'bg-gray-500', text: 'text-white', shadow: 'shadow-md' },
+                '#step2': { bg: 'bg-green-600', text: 'text-white', shadow: 'shadow-md' },
+                '#step3': { bg: 'bg-pink-600', text: 'text-white', shadow: 'shadow-md' }
             };
 
             const defaultClasses = ['hover:bg-gray-200', 'text-gray-700'];
@@ -687,7 +463,7 @@
         const MAP_CENTER = {
             lat: -2.5,
             lng: 118.0,
-            altitude: 0.8
+            altitude: 1
         };
         const OPACITY = 0.3;
 
@@ -778,6 +554,4 @@
             });
         }
     </script>
-</body>
-
-</html>
+@endsection
