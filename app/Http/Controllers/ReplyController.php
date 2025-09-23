@@ -7,6 +7,7 @@ use App\Models\Reply;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Services\ContentModeration;
 
 class ReplyController extends Controller
 {
@@ -22,6 +23,20 @@ class ReplyController extends Controller
              'content' => 'required|string|max:1000',
          ]);
  
+         // Moderation check for hate speech (fail-open on errors)
+         try {
+             $moderation = app(ContentModeration::class)->checkForHateSpeech($request->content);
+            if ($moderation['isHateSpeech'] ?? false) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Reply contains hate speech and cannot be published.',
+                    'reasons' => $moderation['reasons'] ?? [],
+                ], 422);
+            }
+         } catch (\Throwable $e) {
+             // Ignore moderation errors to not block replying
+         }
+
          $reply = Reply::create([
              'post_id' => $post->id,
              'user_id' => Auth::id(),

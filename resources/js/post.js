@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const postButton = document.getElementById("post-button");
     const postForm = document.getElementById("post-form");
     const postsContainer = document.getElementById("posts-container");
+    const postError = document.getElementById("post-error");
 
     // Function to create a new post element
     const createPostElement = (post) => {
@@ -142,13 +143,31 @@ document.addEventListener("DOMContentLoaded", () => {
                 // Reset form
                 textarea.value = "";
                 postButton.disabled = true;
+                if (postError) {
+                    postError.classList.add("hidden");
+                    postError.querySelector('div').innerHTML = "";
+                }
             } else {
-                alert("Gagal posting: " + (data.error || "Unknown error"));
+                // Show styled error
+                let html = "Failed to post: ";
+                const msg = data.message || data.error || "Unknown error";
+                if (Array.isArray(data.reasons) && data.reasons.length > 0) {
+                    html += `<div class="font-semibold">${msg}</div>`;
+                    html += '<ul class="list-disc pl-5 mt-1">' + data.reasons.map(r => `<li>${String(r)}</li>`).join("") + '</ul>';
+                } else {
+                    html += msg;
+                }
+                if (postError) {
+                    postError.classList.remove("hidden");
+                    postError.querySelector('div').innerHTML = html;
+                } else {
+                    alert(html.replace(/<[^>]+>/g, ''));
+                }
                 postButton.disabled = false;
             }
         } catch (error) {
             console.error("Error:", error);
-            alert("Terjadi error saat posting");
+            alert("An error occurred while posting");
             postButton.disabled = false;
         }
     });

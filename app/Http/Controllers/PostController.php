@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Services\ContentModeration;
 
 class PostController extends Controller
 {
@@ -59,7 +60,21 @@ class PostController extends Controller
             'content' => 'required|string|max:500',
             'institution' => 'nullable|string|max:255',
         ]);
-    
+
+        // Moderation check for hate speech (fail-open on errors)
+        try {
+            $moderation = app(ContentModeration::class)->checkForHateSpeech($validated['content']);
+            if ($moderation['isHateSpeech'] ?? false) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Content contains hate speech and cannot be published.',
+                    'reasons' => $moderation['reasons'] ?? [],
+                ], 422);
+            }
+        } catch (\Throwable $e) {
+            // Ignore moderation errors to not block posting
+        }
+
         try {
             $post = DB::transaction(function () use ($validated) {
                 // Insert post

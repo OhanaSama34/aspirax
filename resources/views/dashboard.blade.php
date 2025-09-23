@@ -70,6 +70,9 @@
                             <textarea id="composer-textarea" name="content"
                                 class="w-full text-xl border-none p-2 resize-none focus:ring-0 placeholder-gray-500"
                                 rows="2" placeholder="What's happening?!"></textarea>
+							<div id="post-error" class="hidden mt-2">
+								<div class="bg-red-50 border-2 border-red-300 p-3 rounded-xl text-red-700 text-sm"></div>
+							</div>
                             <div class="flex justify-end items-center mt-3 pt-3 border-t border-gray-100">
                                 <button id="post-button" type="submit"
                                     class="bg-orange-500 hover:bg-orange-600 text-white font-bold px-5 py-2 rounded-full shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"

@@ -122,8 +122,30 @@ document.addEventListener("submit", async (e) => {
             `
             );
             input.value = "";
+        } else {
+            // Inline error near the form
+            let errorEl = form.querySelector('.comment-error');
+            if (!errorEl) {
+                errorEl = document.createElement('div');
+                errorEl.className = 'comment-error mt-2';
+                errorEl.innerHTML = '<div class="bg-red-50 border-2 border-red-300 p-2 rounded text-red-700 text-sm"></div>';
+                form.parentElement.insertBefore(errorEl, form);
+            }
+            const container = errorEl.querySelector('div');
+            let html = data.message || data.error || 'Unknown error';
+            if (Array.isArray(data.reasons) && data.reasons.length > 0) {
+                html = `<div class="font-semibold">${html}</div>` + '<ul class="list-disc pl-5 mt-1">' + data.reasons.map(r => `<li>${String(r)}</li>`).join('') + '</ul>';
+            }
+            container.innerHTML = html;
         }
     } catch (err) {
         console.error(err);
+        let errorEl = form.querySelector('.comment-error');
+        if (!errorEl) {
+            errorEl = document.createElement('div');
+            errorEl.className = 'comment-error mt-2';
+            errorEl.innerHTML = '<div class="bg-red-50 border-2 border-red-300 p-2 rounded text-red-700 text-sm">An error occurred while posting the reply.</div>';
+            form.parentElement.insertBefore(errorEl, form);
+        }
     }
 });
