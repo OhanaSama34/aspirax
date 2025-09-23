@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                     <div class="w-full">
                         <div class="flex items-center">
-                            <p class="font-bold text-gray-900">${
+                            <p class="font-bold text-gray-900 truncate w-32">${
                                 post.user.name
                             }</p>
                             <div class="ml-auto text-gray-500">
@@ -135,6 +135,7 @@ document.addEventListener("DOMContentLoaded", () => {
             });
 
             const data = await response.json();
+            console.log(data);
 
             if (response.ok && data.success) {
                 const newPostElement = createPostElement(data.post);
@@ -145,7 +146,25 @@ document.addEventListener("DOMContentLoaded", () => {
                 postButton.disabled = true;
                 if (postError) {
                     postError.classList.add("hidden");
-                    postError.querySelector('div').innerHTML = "";
+                    postError.querySelector("div").innerHTML = "";
+                }
+
+                if (data.points_awarded) {
+                    // confetti animation
+                    confetti({
+                        particleCount: 150,
+                        spread: 70,
+                        origin: { y: 0.6 },
+                    });
+
+                    // modal notifikasi
+                    Swal.fire({
+                        title: "🏆 Poin Bertambah!",
+                        text: `Anda mendapatkan ${data.points_awarded} poin!`,
+                        icon: "success",
+                        timer: 3000,
+                        showConfirmButton: false,
+                    });
                 }
             } else {
                 // Show styled error
@@ -153,15 +172,20 @@ document.addEventListener("DOMContentLoaded", () => {
                 const msg = data.message || data.error || "Unknown error";
                 if (Array.isArray(data.reasons) && data.reasons.length > 0) {
                     html += `<div class="font-semibold">${msg}</div>`;
-                    html += '<ul class="list-disc pl-5 mt-1">' + data.reasons.map(r => `<li>${String(r)}</li>`).join("") + '</ul>';
+                    html +=
+                        '<ul class="list-disc pl-5 mt-1">' +
+                        data.reasons
+                            .map((r) => `<li>${String(r)}</li>`)
+                            .join("") +
+                        "</ul>";
                 } else {
                     html += msg;
                 }
                 if (postError) {
                     postError.classList.remove("hidden");
-                    postError.querySelector('div').innerHTML = html;
+                    postError.querySelector("div").innerHTML = html;
                 } else {
-                    alert(html.replace(/<[^>]+>/g, ''));
+                    alert(html.replace(/<[^>]+>/g, ""));
                 }
                 postButton.disabled = false;
             }

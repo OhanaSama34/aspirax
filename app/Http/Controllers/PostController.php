@@ -85,15 +85,19 @@ class PostController extends Controller
                 ]);
     
                 // Tambah point user
-                User::whereKey(Auth::id())->increment('point', 10);
+                User::whereKey(Auth::id())->increment('point', 5);
     
                 return $post;
             });
+
+            $currentPoints = User::whereKey(Auth::id())->first()->point;
     
             return response()->json([
                 'success' =>  true,
                 'message' => 'Post created successfully!',
-                'post'    => $post->load(['user', 'likes', 'replies']), // eager load relasi user
+                'post'    => $post->load(['user', 'likes', 'replies']), 
+                'points_awarded' => 5,              
+                'total_points'   => $currentPoints, // total poin user sekarang
             ], 201);
     
         } catch (\Throwable $e) {

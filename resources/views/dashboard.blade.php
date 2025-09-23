@@ -80,7 +80,7 @@
 
                             <div class="w-full">
                                 <div class="flex items-center">
-                                    <p class="font-bold text-gray-900">{{ $post->user->name }}</p>
+                                    <p class="font-bold text-gray-900 truncate w-32">{{ $post->user->name }}</p>
                                     <div class="ml-auto text-gray-500">
                                         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                                             <g>
@@ -182,6 +182,10 @@
             </div>
         </aside>
     </div>
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
 
     @vite(['resources/js/post.js', 'resources/js/like.js'])
 
