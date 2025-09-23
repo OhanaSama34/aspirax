@@ -9,16 +9,15 @@
                 <nav class="space-y-2">
                     <a href="#"
                         class="flex items-center space-x-4 px-4 py-2 rounded-full hover:bg-gray-100 font-bold text-lg text-gray-800">
-                        <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24">
-                            <g>
-                                <path
-                                    d="M12 1.696L.622 8.807l1.06 1.696L3 9.679V19.5C3 20.881 4.119 22 5.5 22h13c1.381 0 2.5-1.119 2.5-2.5V9.679l1.318.824 1.06-1.696L12 1.696zM12 16c-1.105 0-2-.895-2-2s.895-2 2-2 2 .895 2 2-.895 2-2 2z">
-                                </path>
-                            </g>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="size-6">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 0 1 .865-.501 48.172 48.172 0 0 0 3.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z" />
                         </svg>
+
                         <span>Home</span>
                     </a>
-                    <a href="#"
+                    <a href="/aspiro"
                         class="flex items-center space-x-4 px-4 py-2 rounded-full hover:bg-gray-100 font-medium text-lg text-gray-800">
                         <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24">
                             <g>
@@ -27,34 +26,19 @@
                                 </path>
                             </g>
                         </svg>
-                        <span>Explore</span>
+                        <span>Chat With Aspiro</span>
                     </a>
                     <a href="#"
                         class="flex items-center space-x-4 px-4 py-2 rounded-full hover:bg-gray-100 font-medium text-lg text-gray-800">
-                        <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24">
-                            <g>
-                                <path
-                                    d="M19.99 2H4c-1.105 0-2 .895-2 2v16c0 1.105.895 2 2 2h15.99c1.105 0 2-.895 2-2V4c0-1.105-.895-2-1.99-2zM8 17c-.552 0-1-.448-1-1s.448-1 1-1 1 .448 1 1-.448 1-1 1zm0-4c-.552 0-1-.448-1-1s.448-1 1-1 1 .448 1 1-.448 1-1 1zm0-4c-.552 0-1-.448-1-1s.448-1 1-1 1 .448 1 1-.448 1-1 1zm6 8h-4c-.552 0-1-.448-1-1s.448-1 1-1h4c.552 0 1 .448 1 1s-.448 1-1 1zm2-4h-6c-.552 0-1-.448-1-1s.448-1 1-1h6c.552 0 1 .448 1 1s-.448 1-1 1zm0-4h-6c-.552 0-1-.448-1-1s.448-1 1-1h6c.552 0 1 .448 1 1s-.448 1-1 1z">
-                                </path>
-                            </g>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="size-6">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M16.5 3.75V16.5L12 14.25 7.5 16.5V3.75m9 0H18A2.25 2.25 0 0 1 20.25 6v12A2.25 2.25 0 0 1 18 20.25H6A2.25 2.25 0 0 1 3.75 18V6A2.25 2.25 0 0 1 6 3.75h1.5m9 0h-9" />
                         </svg>
-                        <span>Notifications</span>
+
+                        <span>Leaderboard</span>
                     </a>
-                    <a href="#"
-                        class="flex items-center space-x-4 px-4 py-2 rounded-full hover:bg-gray-100 font-medium text-lg text-gray-800">
-                        <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24">
-                            <g>
-                                <path
-                                    d="M22 6.5c0-.828-.672-1.5-1.5-1.5H3.5C2.672 5 2 5.672 2 6.5v11C2 18.328 2.672 19 3.5 19h17c.828 0 1.5-.672 1.5-1.5v-11zM20.5 7L12 12.396 3.5 7h17zM3.5 17.5V8.816l8.156 5.437c.18.12.388.182.594.182s.414-.062.594-.182L20.5 8.816V17.5h-17z">
-                                </path>
-                            </g>
-                        </svg>
-                        <span>Messages</span>
-                    </a>
-                    
                 </nav>
-                <button
-                    class="bg-orange-500 hover:bg-orange-600 text-white font-bold text-lg w-full py-3 rounded-full">Tweet</button>
             </div>
         </aside>
 
@@ -68,16 +52,17 @@
                             class="w-12 h-12 rounded-full">
                         <div class="w-full">
                             <textarea id="composer-textarea" name="content"
-                                class="w-full text-xl border-none p-2 resize-none focus:ring-0 placeholder-gray-500"
-                                rows="2" placeholder="What's happening?!"></textarea>
-							<div id="post-error" class="hidden mt-2">
-								<div class="bg-red-50 border-2 border-red-300 p-3 rounded-xl text-red-700 text-sm"></div>
-							</div>
+                                class="w-full text-xl border-none p-2 resize-none focus:ring-0 placeholder-gray-500" rows="2"
+                                placeholder="What's happening?!"></textarea>
+                            <div id="post-error" class="hidden mt-2">
+                                <div class="bg-red-50 border-2 border-red-300 p-3 rounded-xl text-red-700 text-sm">
+                                </div>
+                            </div>
                             <div class="flex justify-end items-center mt-3 pt-3 border-t border-gray-100">
                                 <button id="post-button" type="submit"
-                                    class="bg-orange-500 hover:bg-orange-600 text-white font-bold px-5 py-2 rounded-full shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                                    class="bg-blue-500 hover:bg-blue-600 text-white font-bold px-5 py-2 rounded-full shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
                                     disabled>
-                                    Tweet
+                                    Send Aspiration
                                 </button>
                             </div>
                         </div>
@@ -87,12 +72,12 @@
 
             <div id="posts-container" class="posts-container">
                 @foreach ($posts as $post)
-                    <div class="post-item p-4 border-b border-gray-200 hover:bg-gray-50 cursor-pointer" 
-                         data-post-id="{{ $post->id }}">
+                    <div class="post-item p-4 border-b border-gray-200 hover:bg-gray-50 cursor-pointer"
+                        data-post-id="{{ $post->id }}">
                         <div class="flex space-x-4">
                             <img src="https://placehold.co/48x48/cccccc/333333?text=U"
-                                 alt="{{ $post->user->name }} Avatar" class="w-12 h-12 rounded-full flex-shrink-0">
-            
+                                alt="{{ $post->user->name }} Avatar" class="w-12 h-12 rounded-full flex-shrink-0">
+
                             <div class="w-full">
                                 <div class="flex items-center">
                                     <p class="font-bold text-gray-900">{{ $post->user->name }}</p>
@@ -106,12 +91,12 @@
                                         </svg>
                                     </div>
                                 </div>
-            
+
                                 <p class="mt-1 text-gray-800">{{ $post->content }}</p>
-            
+
                                 <div class="flex justify-between items-center mt-4 text-gray-500 max-w-sm">
                                     <!-- Comment count -->
-                                    <div class="flex items-center space-x-2 hover:text-orange-500 comment-button">
+                                    <div class="flex items-center space-x-2 hover:text-blue-500 comment-button">
                                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path
                                                 d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z">
@@ -119,7 +104,7 @@
                                         </svg>
                                         <span>{{ $post->replies->count() }}</span>
                                     </div>
-            
+
                                     <!-- Retweet / share placeholder -->
                                     <div class="flex items-center space-x-2 hover:text-green-500">
                                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -129,23 +114,26 @@
                                         </svg>
                                         <span>{{ rand(10, 100) }}</span>
                                     </div>
-            
+
                                     <!-- Like button -->
-                                    <div class="flex items-center space-x-2 like-button cursor-pointer" 
-                                         data-post-id="{{ $post->id }}" 
-                                         data-liked="{{ $post->isLikedBy(Auth::user()) ? 'true' : 'false' }}">
-                                        <svg class="w-5 h-5 {{ $post->isLikedBy(Auth::user()) ? 'text-red-500 fill-current' : 'text-gray-500' }}" 
-                                             fill="{{ $post->isLikedBy(Auth::user()) ? 'currentColor' : 'none' }}" 
-                                             stroke="currentColor" viewBox="0 0 24 24">
-                                            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path>
+                                    <div class="flex items-center space-x-2 like-button cursor-pointer"
+                                        data-post-id="{{ $post->id }}"
+                                        data-liked="{{ $post->isLikedBy(Auth::user()) ? 'true' : 'false' }}">
+                                        <svg class="w-5 h-5 {{ $post->isLikedBy(Auth::user()) ? 'text-red-500 fill-current' : 'text-gray-500' }}"
+                                            fill="{{ $post->isLikedBy(Auth::user()) ? 'currentColor' : 'none' }}"
+                                            stroke="currentColor" viewBox="0 0 24 24">
+                                            <path
+                                                d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z">
+                                            </path>
                                         </svg>
                                         <span class="like-count">{{ $post->likes()->count() }}</span>
                                     </div>
-            
+
                                     <!-- Add / placeholder button -->
-                                    <div class="hover:text-orange-500">
+                                    <div class="hover:text-blue-500">
                                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path d="M12 5L12 19M5 12L19 12" stroke-width="2" stroke-linecap="round"></path>
+                                            <path d="M12 5L12 19M5 12L19 12" stroke-width="2" stroke-linecap="round">
+                                            </path>
                                         </svg>
                                     </div>
                                 </div>
@@ -155,7 +143,8 @@
                                     <form class="comment-form mt-2 flex space-x-2" data-post-id="{{ $post->id }}">
                                         <input type="text" name="content" class="flex-1 border rounded px-2 py-1"
                                             placeholder="Tambahkan komentar...">
-                                        <button type="submit" class="bg-blue-500 text-white px-3 rounded">Kirim</button>
+                                        <button type="submit"
+                                            class="bg-blue-500 text-white px-3 rounded">Kirim</button>
                                     </form>
                                 </div>
                             </div>
@@ -163,8 +152,8 @@
                     </div>
                 @endforeach
             </div>
-        
-            
+
+
         </main>
 
         <!-- Sidebar Kanan -->
@@ -190,43 +179,10 @@
                         </li>
                     </ul>
                 </div>
-                <div class="bg-gray-100 rounded-xl p-4">
-                    <h2 class="text-xl font-bold mb-4 text-gray-800">Who to follow</h2>
-                    <ul class="space-y-4">
-                        <li class="flex items-center justify-between">
-                            <div class="flex items-center space-x-3">
-                                <img src="https://placehold.co/40x40/d1d5db/333333?text=A"
-                                    class="w-10 h-10 rounded-full">
-                                <div>
-                                    <p class="font-bold text-gray-900">User A</p>
-                                    <p class="text-gray-500">@usera</p>
-                                </div>
-                            </div>
-                            <button
-                                class="bg-black hover:bg-gray-800 text-white px-4 py-1.5 rounded-full font-semibold text-sm">
-                                Follow
-                            </button>
-                        </li>
-                        <li class="flex items-center justify-between">
-                            <div class="flex items-center space-x-3">
-                                <img src="https://placehold.co/40x40/d1d5db/333333?text=B"
-                                    class="w-10 h-10 rounded-full">
-                                <div>
-                                    <p class="font-bold text-gray-900">User B</p>
-                                    <p class="text-gray-500">@userb</p>
-                                </div>
-                            </div>
-                            <button
-                                class="bg-black hover:bg-gray-800 text-white px-4 py-1.5 rounded-full font-semibold text-sm">
-                                Follow
-                            </button>
-                        </li>
-                    </ul>
-                </div>
             </div>
         </aside>
     </div>
 
     @vite(['resources/js/post.js', 'resources/js/like.js'])
-        
+
 </x-app-layout>
