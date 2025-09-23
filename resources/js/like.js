@@ -47,31 +47,73 @@ document.addEventListener("click", async (e) => {
 
     // toggle visibility
     commentArea.classList.toggle("hidden");
+
     if (!commentArea.classList.contains("hidden")) {
         try {
             const res = await fetch(`/posts/${postId}/replies`);
             const data = await res.json();
 
-            commentsList.innerHTML = data.comments
-                .map(
-                    (c) => `
-                    <div class="flex space-x-2 items-start p-2 border rounded">
-                        <img src="${
-                            c.user?.avatar ||
-                            "https://placehold.co/40x40/cccccc/333333?text=U"
-                        }" class="w-10 h-10 rounded-full">
-                        <div>
-                            <p class="font-bold text-gray-800">${
-                                c.user?.name
-                            }</p>
-                            <p>${c.content}</p>
-                        </div>
-                    </div>
-                `
-                )
-                .join("");
+            // simpan komentar di dataset supaya bisa dipanggil lagi
+            commentsList.dataset.comments = JSON.stringify(data.comments);
+            commentsList.dataset.currentIndex = "0"; // mulai dari 0
+
+            // render awal 5 komentar
+            renderNextComments(commentsList, 5);
         } catch (err) {
             console.error(err);
+        }
+    } else {
+        // reset kalau ditutup
+        commentsList.innerHTML = "";
+        commentsList.removeAttribute("data-comments");
+        commentsList.removeAttribute("data-current-index");
+    }
+
+    function renderNextComments(commentsList, count) {
+        const comments = JSON.parse(commentsList.dataset.comments || "[]");
+        let currentIndex = parseInt(commentsList.dataset.currentIndex || "0");
+
+        const nextIndex = Math.min(currentIndex + count, comments.length);
+        const nextBatch = comments.slice(currentIndex, nextIndex);
+
+        // render batch baru
+        const html = nextBatch
+            .map(
+                (c) => `
+            <div class="flex space-x-2 items-start p-2 border rounded">
+                <img src="${
+                    c.user?.avatar ||
+                    "https://placehold.co/40x40/cccccc/333333?text=U"
+                }" class="w-10 h-10 rounded-full">
+                <div>
+                    <p class="font-bold text-gray-800">${c.user?.name}</p>
+                    <p>${c.content}</p>
+                </div>
+            </div>
+        `
+            )
+            .join("");
+        commentsList.insertAdjacentHTML("beforeend", html);
+
+        // update index
+        commentsList.dataset.currentIndex = nextIndex.toString();
+
+        // hapus tombol lama
+        const oldBtn = commentsList.querySelector(".load-more-btn");
+        if (oldBtn) oldBtn.remove();
+
+        // kalau masih ada komentar tersisa, buat tombol lagi
+        if (nextIndex < comments.length) {
+            const loadMoreBtn = document.createElement("button");
+            loadMoreBtn.textContent = "Lihat komentar lainnya";
+            loadMoreBtn.className =
+                "load-more-btn mt-2 text-blue-600 hover:underline text-sm font-semibold";
+
+            loadMoreBtn.addEventListener("click", () => {
+                renderNextComments(commentsList, 5);
+            });
+
+            commentsList.insertAdjacentElement("beforeend", loadMoreBtn);
         }
     }
 });
@@ -124,27 +166,33 @@ document.addEventListener("submit", async (e) => {
             input.value = "";
         } else {
             // Inline error near the form
-            let errorEl = form.querySelector('.comment-error');
+            let errorEl = form.querySelector(".comment-error");
             if (!errorEl) {
-                errorEl = document.createElement('div');
-                errorEl.className = 'comment-error mt-2';
-                errorEl.innerHTML = '<div class="bg-red-50 border-2 border-red-300 p-2 rounded text-red-700 text-sm"></div>';
+                errorEl = document.createElement("div");
+                errorEl.className = "comment-error mt-2";
+                errorEl.innerHTML =
+                    '<div class="bg-red-50 border-2 border-red-300 p-2 rounded text-red-700 text-sm"></div>';
                 form.parentElement.insertBefore(errorEl, form);
             }
-            const container = errorEl.querySelector('div');
-            let html = data.message || data.error || 'Unknown error';
+            const container = errorEl.querySelector("div");
+            let html = data.message || data.error || "Unknown error";
             if (Array.isArray(data.reasons) && data.reasons.length > 0) {
-                html = `<div class="font-semibold">${html}</div>` + '<ul class="list-disc pl-5 mt-1">' + data.reasons.map(r => `<li>${String(r)}</li>`).join('') + '</ul>';
+                html =
+                    `<div class="font-semibold">${html}</div>` +
+                    '<ul class="list-disc pl-5 mt-1">' +
+                    data.reasons.map((r) => `<li>${String(r)}</li>`).join("") +
+                    "</ul>";
             }
             container.innerHTML = html;
         }
     } catch (err) {
         console.error(err);
-        let errorEl = form.querySelector('.comment-error');
+        let errorEl = form.querySelector(".comment-error");
         if (!errorEl) {
-            errorEl = document.createElement('div');
-            errorEl.className = 'comment-error mt-2';
-            errorEl.innerHTML = '<div class="bg-red-50 border-2 border-red-300 p-2 rounded text-red-700 text-sm">An error occurred while posting the reply.</div>';
+            errorEl = document.createElement("div");
+            errorEl.className = "comment-error mt-2";
+            errorEl.innerHTML =
+                '<div class="bg-red-50 border-2 border-red-300 p-2 rounded text-red-700 text-sm">An error occurred while posting the reply.</div>';
             form.parentElement.insertBefore(errorEl, form);
         }
     }
