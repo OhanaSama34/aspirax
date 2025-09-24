@@ -7,7 +7,7 @@
             <div class="sticky top-0 space-y-4">
 
                 <nav class="space-y-2">
-                    <a href="#"
+                    <a href="/dashboard"
                         class="flex items-center space-x-4 px-4 py-2 rounded-full hover:bg-gray-100 font-bold text-lg text-gray-800">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="size-6">
@@ -28,7 +28,7 @@
                         </svg>
                         <span>Chat With Aspiro</span>
                     </a>
-                    <a href="#"
+                    <a href="/leaderboard"
                         class="flex items-center space-x-4 px-4 py-2 rounded-full hover:bg-gray-100 font-medium text-lg text-gray-800">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="size-6">
@@ -106,14 +106,14 @@
                                     </div>
 
                                     <!-- Retweet / share placeholder -->
-                                    <div class="flex items-center space-x-2 hover:text-green-500">
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path
-                                                d="M23 4v6h-6m-1 8v6h6M3 10H2c-1.105 0-2 .895-2 2v4c0 1.105.895 2 2 2h2V10zm18-5h1c1.105 0 2 .895 2 2v4c0 1.105-.895 2-2 2h-2V5z"
-                                                transform="rotate(90 12 12)"></path>
-                                        </svg>
-                                        <span>{{ rand(10, 100) }}</span>
-                                    </div>
+                                    <!--<div class="flex items-center space-x-2 hover:text-green-500">-->
+                                    <!--    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">-->
+                                    <!--        <path-->
+                                    <!--            d="M23 4v6h-6m-1 8v6h6M3 10H2c-1.105 0-2 .895-2 2v4c0 1.105.895 2 2 2h2V10zm18-5h1c1.105 0 2 .895 2 2v4c0 1.105-.895 2-2 2h-2V5z"-->
+                                    <!--            transform="rotate(90 12 12)"></path>-->
+                                    <!--    </svg>-->
+                                    <!--    <span>{{ rand(10, 100) }}</span>-->
+                                    <!--</div>-->
 
                                     <!-- Like button -->
                                     <div class="flex items-center space-x-2 like-button cursor-pointer"
@@ -187,6 +187,8 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
 
-    @vite(['resources/js/post.js', 'resources/js/like.js'])
+    
+    @vite(['resources/js/post.js','resources/js/like.js'])
+
 
 </x-app-layout>

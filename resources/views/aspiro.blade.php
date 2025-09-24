@@ -14,7 +14,7 @@
             </div>
 
             <h1 class="text-5xl md:text-6xl font-bold mb-3">
-                Hi there, <span class="text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-green-400">Jidan</span>
+                Hi there,<p class="truncate w-96 text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-green-400 ">@guest User @endguest @auth {{ Auth::user()->name }} @endauth</p>
             </h1>
             <h2 class="text-3xl md:text-4xl font-semibold text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-green-400 mb-12">
                 Ready to Discuss with AI?
