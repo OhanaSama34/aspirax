@@ -20,45 +20,17 @@
                 Ready to Discuss with AI?
             </h2>
 
-            <!-- Grid Kartu Fitur -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full mb-12">
-                <!-- Kartu 1: Video -->
-                <div class="bg-white rounded-2xl p-6 text-left shadow-lg hover:shadow-xl hover:shadow-pink-500/20 transition-shadow duration-300">
-                    <div class="w-10 h-10 mb-4 rounded-lg bg-gray-50 flex items-center justify-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-pink-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                        </svg>
-                    </div>
-                    <h3 class="font-semibold text-white mb-1">Create Cinematic 4K Videos</h3>
-                    <p class="text-slate-400 text-sm">AI-generated. Studio quality. Lightning fast.</p>
-                </div>
-
-                <!-- Kartu 2: Musik -->
-                <div class="bg-white rounded-2xl p-6 text-left shadow-lg hover:shadow-xl hover:shadow-green-500/20 transition-shadow duration-300">
-                    <div class="w-10 h-10 mb-4 rounded-lg bg-gray-50 flex items-center justify-center">
-                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 6l12-3" />
-                        </svg>
-                    </div>
-                    <h3 class="font-semibold text-white mb-1">Make Music, Voiceovers & FX</h3>
-                    <p class="text-slate-400 text-sm">Compose with AI. Your sound, your style.</p>
-                </div>
-
-                <!-- Kartu 3: Asisten AI -->
-                <div class="bg-white rounded-2xl p-6 text-left shadow-lg hover:shadow-xl hover:shadow-pink-500/20 transition-shadow duration-300">
-                    <div class="w-10 h-10 mb-4 rounded-lg bg-gray-50 flex items-center justify-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-pink-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                           <path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-                        </svg>
-                    </div>
-                    <h3 class="font-semibold text-white mb-1">Ask AI Assistant</h3>
-                    <p class="text-slate-400 text-sm">Get insights, automate work, brainstorm ideas.</p>
-                </div>
+            
+            <!-- Toolbar -->
+            <div class="w-full max-w-2xl mb-3 flex justify-end">
+                <button id="aspiro-new" class="text-sm px-3 py-1.5 rounded-full border bg-white hover:bg-gray-50 text-black">Chat Baru</button>
             </div>
+            <!-- Chat output moved above input -->
+            <div id="aspiro-output" class="w-full max-w-2xl mb-4 text-left space-y-3"></div>
 
-            <!-- Input Bar di bagian bawah -->
-            <div class="w-full max-w-2xl relative">
-                <input type="text" placeholder="Ask anything" class="w-full py-4 px-6 rounded-full bg-white text-black placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-pink-500 transition-shadow duration-300 shadow-md pl-28 pr-24">
+            <!-- Input Bar -->
+            <div class="w-full max-w-2xl relative" id="aspiro-chat">
+                <input id="aspiro-input" type="text" placeholder="Tanyakan isu politik terkini" class="w-full py-4 px-6 rounded-full bg-white text-black placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-pink-500 transition-shadow duration-300 shadow-md pl-28 pr-24">
             
                                 <!-- Opsi di dalam input (kiri) -->
                 <div class="absolute left-4 top-1/2 -translate-y-1/2 flex items-center gap-2">
@@ -76,16 +48,136 @@
                             <path stroke-linecap="round" stroke-linejoin="round" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
                         </svg>
                     </button>
-                    <button class="bg-gradient-to-br from-pink-500 to-green-500 text-white rounded-full p-2 hover:opacity-90 transition-opacity">
+                    <button id="aspiro-send" class="bg-gradient-to-br from-pink-500 to-green-500 text-white rounded-full p-2 hover:opacity-90 transition-opacity">
                          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M5 10l7-7m0 0l7 7m-7-7v18" />
                         </svg>
                     </button>
                 </div>
             </div>
+            
         </main>
 
     </div>
 
 
 @endsection
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const input = document.getElementById('aspiro-input');
+    const sendBtn = document.getElementById('aspiro-send');
+    const output = document.getElementById('aspiro-output');
+    const newBtn = document.getElementById('aspiro-new');
+    const csrf = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '';
+
+    function escapeHtml(str) {
+        return str
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;');
+    }
+
+    function renderTextAsHtml(str) {
+        // Preserve newlines; no markdown, avoid HTML injection
+        return escapeHtml(str).replace(/\n/g, '<br>');
+    }
+
+    function showIntro() {
+        if (!output) return;
+        // Only show if empty (new visit or reset)
+        if (output.children.length === 0) {
+            const intro = document.createElement('div');
+            intro.className = 'p-3 rounded-xl bg-white border text-black';
+            intro.innerHTML = renderTextAsHtml(
+                'Halo, saya Aspiro. Saya asisten netral untuk berdiskusi isu politik terkini.\n'
+            );
+            output.appendChild(intro);
+        }
+    }
+
+    async function sendMessage() {
+        const text = (input.value || '').trim();
+        if (!text) return;
+        const userBubble = document.createElement('div');
+        userBubble.className = 'p-3 rounded-xl bg-gray-100 text-black';
+        userBubble.textContent = text;
+        output.appendChild(userBubble);
+        input.value = '';
+        const loading = document.createElement('div');
+        loading.className = 'text-sm text-slate-500';
+        loading.textContent = 'Aspiro mengetik…';
+        output.appendChild(loading);
+        // Disable send while in-flight
+        const previousDisabled = sendBtn.disabled;
+        sendBtn.disabled = true;
+        const previousOpacity = sendBtn.style.opacity;
+        sendBtn.style.opacity = '0.7';
+        try {
+            const res = await fetch('/aspiro/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': csrf,
+                    'X-Requested-With': 'XMLHttpRequest',
+                },
+                body: JSON.stringify({ message: text }),
+            });
+            const data = await res.json();
+            output.removeChild(loading);
+            if (data && data.blocked) {
+                const warn = document.createElement('div');
+                warn.className = 'p-3 rounded-xl bg-red-50 text-red-700';
+                warn.textContent = 'Diblokir: ' + (data.reasons || []).join(', ');
+                output.appendChild(warn);
+                output.scrollTop = output.scrollHeight;
+                return;
+            }
+            const botBubble = document.createElement('div');
+            botBubble.className = 'p-3 rounded-xl bg-white border text-black';
+            botBubble.innerHTML = (data && data.reply) ? renderTextAsHtml(data.reply) : '(tidak ada balasan)';
+            output.appendChild(botBubble);
+            output.scrollTop = output.scrollHeight;
+        } catch (e) {
+            output.removeChild(loading);
+            const err = document.createElement('div');
+            err.className = 'p-3 rounded-xl bg-red-50 text-red-700';
+            err.textContent = 'Gagal mengirim pesan.';
+            output.appendChild(err);
+        } finally {
+            sendBtn.disabled = previousDisabled;
+            sendBtn.style.opacity = previousOpacity;
+        }
+    }
+
+    sendBtn?.addEventListener('click', sendMessage);
+    input?.addEventListener('keydown', (ev) => {
+        if (ev.key === 'Enter' && !ev.shiftKey) {
+            ev.preventDefault();
+            sendMessage();
+        }
+    });
+
+    newBtn?.addEventListener('click', async () => {
+        try {
+            await fetch('/aspiro/reset', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': csrf,
+                    'X-Requested-With': 'XMLHttpRequest',
+                },
+                body: '{}'
+            });
+        } catch (e) { /* ignore */ }
+        // Clear UI
+        output.innerHTML = '';
+        input.value = '';
+        input.focus();
+        showIntro();
+    });
+
+    // Intro on first load
+    showIntro();
+});
+</script>
