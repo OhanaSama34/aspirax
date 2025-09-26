@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AspiraX</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Impor Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Impor Google Fonts -->
@@ -118,7 +119,7 @@
             right: 0;
             bottom: 0;
             /* Ganti URL ini dengan path gambar Anda */
-            background-image: url('{{ asset('storage/images/bg-fix.svg') }}');
+            background-image: url('{{ asset('storage/images/bg-fix2.svg') }}');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;

@@ -16,6 +16,8 @@ Route::get('/', function () {
 
 Route::get('/leaderboard', [LeaderboardUser::class, 'index']);
 Route::get('/aspiro', [AspiroBot::class, 'index']);
+Route::post('/aspiro/chat', [AspiroBot::class, 'chat'])->name('aspiro.chat');
+Route::post('/aspiro/reset', [AspiroBot::class, 'reset'])->name('aspiro.reset');
 Route::get('/dashboard', [PostController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('dashboard');

@@ -1,5 +1,6 @@
 document.addEventListener("click", async (e) => {
     // LIKE BUTTON
+    console.log('like');
     const likeBtn = e.target.closest(".like-button");
     if (likeBtn) {
         const postId = likeBtn.dataset.postId;
