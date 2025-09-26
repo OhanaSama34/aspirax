@@ -130,7 +130,7 @@
     </style>
 </head>
 
-<body class="bg-white text-gray-900">
+<body class="bg-white text-gray-900 scroll-smooth">
     <div id="app-wrapper">
         <header class="py-6 relative z-10 container mx-auto px-4">
             <nav class="flex justify-between items-center">
@@ -196,7 +196,8 @@
 
             <!-- Mobile Menu -->
             <div id="mobile-menu" class="hidden md:hidden bg-white shadow-lg rounded-lg mt-2 p-4 absolute right-4 w-56">
-                <a href="#" class="block py-2 px-3 text-gray-600 hover:bg-gray-100 rounded">AspiroBot Edu</a>
+                <a href="/leaderboard" class="block py-2 px-3 text-gray-600 hover:bg-gray-100 rounded">Leaderboard</a>
+                <a href="/aspiro" class="block py-2 px-3 text-gray-600 hover:bg-gray-100 rounded">Aspiro</a>
                 <meta name="csrf-token" content="{{ csrf_token() }}">
                 <button id="metamask-login-mobile" type="button" data-signature-url="{{ url('/eth/signature') }}"
                     data-authenticate-url="{{ url('/eth/authenticate') }}" data-redirect-url="{{ route('dashboard') }}"
@@ -251,10 +252,24 @@
                     <div>
                         <h3 class="text-sm font-semibold tracking-wider uppercase text-white">Tentang Kami</h3>
                         <ul class="mt-4 space-y-4">
-                            <li><a href="#" class="hover:text-white">Fitur</a></li>
+                            <li><a href="#features" class="hover:text-white">Fitur</a></li>
+                            <li><a href="#vision-mission" class="hover:text-white">Visi & Misi</a></li>
                         </ul>
                     </div>
                 </div>
+
+                <!-- Bagian Sponsor -->
+                <div class="mt-12 text-left">
+                    <h3 class="text-sm font-semibold tracking-wider uppercase text-white">Didukung Oleh</h3>
+                    <div class="mt-6 flex flex-wrap justify-start items-start gap-6 sm:gap-8">
+                        <!-- Contoh Logo Sponsor -->
+                        <a href="https://codelinesunnes.vercel.app/" class="block ">
+                            <img src="{{ asset('storage/images/sponsor.svg') }}" alt="Logo Sponsor 1" class="h-10 rounded-sm opacity-100 hover:opacity-100 transition-opacity duration-300">
+                        </a>
+                    </div>
+                </div>
+                <!-- Akhir Bagian Sponsor -->
+
                 <div class="mt-8 border-t border-gray-700 pt-8 text-center text-sm">
                     <p>&copy; 2025 AspiraX. All rights reserved.</p>
                 </div>
