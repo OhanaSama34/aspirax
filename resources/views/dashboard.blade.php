@@ -105,15 +105,6 @@
                                         <span>{{ $post->replies->count() }}</span>
                                     </div>
 
-                                    <!-- Retweet / share placeholder -->
-                                    <!--<div class="flex items-center space-x-2 hover:text-green-500">-->
-                                    <!--    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">-->
-                                    <!--        <path-->
-                                    <!--            d="M23 4v6h-6m-1 8v6h6M3 10H2c-1.105 0-2 .895-2 2v4c0 1.105.895 2 2 2h2V10zm18-5h1c1.105 0 2 .895 2 2v4c0 1.105-.895 2-2 2h-2V5z"-->
-                                    <!--            transform="rotate(90 12 12)"></path>-->
-                                    <!--    </svg>-->
-                                    <!--    <span>{{ rand(10, 100) }}</span>-->
-                                    <!--</div>-->
 
                                     <!-- Like button -->
                                     <div class="flex items-center space-x-2 like-button cursor-pointer"
