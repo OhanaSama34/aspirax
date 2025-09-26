@@ -119,7 +119,7 @@
             right: 0;
             bottom: 0;
             /* Ganti URL ini dengan path gambar Anda */
-            background-image: url('{{ asset('storage/images/bg-fix.svg') }}');
+            background-image: url('{{ asset('storage/images/bg-fix2.svg') }}');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
