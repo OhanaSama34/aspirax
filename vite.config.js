@@ -9,6 +9,7 @@ export default defineConfig({
                 'resources/js/app.js',
                 'resources/js/post.js',
                 'resources/js/like.js',
+                'resources/js/bootstrap.js',
             ],
             refresh: true,
         }),
