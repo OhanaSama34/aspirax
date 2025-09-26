@@ -48,8 +48,8 @@
                 <form id="post-form" action="{{ route('posts.store') }}" method="POST">
                     @csrf
                     <div class="flex items-start space-x-4">
-                        <img src="https://placehold.co/48x48/e2e8f0/333333?text=." alt="User Avatar"
-                            class="w-12 h-12 rounded-full">
+                        <img src="https://placehold.co/48x48/e2e8f0/333333?text={{ Str::upper(Str::substr(auth()->user()->name, 0, 2)) }}"
+                            alt="User Avatar" class="w-12 h-12 rounded-full">
                         <div class="w-full">
                             <textarea id="composer-textarea" name="content"
                                 class="w-full text-xl border-none p-2 resize-none focus:ring-0 placeholder-gray-500" rows="2"
@@ -75,8 +75,9 @@
                     <div class="post-item p-4 border-b border-gray-200 hover:bg-gray-50 cursor-pointer"
                         data-post-id="{{ $post->id }}">
                         <div class="flex space-x-4">
-                            <img src="https://placehold.co/48x48/cccccc/333333?text=U"
+                            <img src="https://placehold.co/48x48/cccccc/333333?text={{ strtoupper(substr($post->user->name, 0, 2)) }}"
                                 alt="{{ $post->user->name }} Avatar" class="w-12 h-12 rounded-full flex-shrink-0">
+
 
                             <div class="w-full">
                                 <div class="flex items-center">
@@ -155,17 +156,17 @@
                     <ul class="space-y-3">
                         <li class="hover:bg-gray-200 p-2 rounded-lg cursor-pointer">
                             <p class="text-sm text-gray-500">Trending in Indonesia</p>
-                            <p class="font-bold">#Laravel11</p>
+                            <p class="font-bold">#IndonesiaGelap</p>
                             <p class="text-sm text-gray-500">15.2K Tweets</p>
                         </li>
                         <li class="hover:bg-gray-200 p-2 rounded-lg cursor-pointer">
-                            <p class="text-sm text-gray-500">Technology · Trending</p>
-                            <p class="font-bold">#TailwindCSS</p>
+                            <p class="text-sm text-gray-500">Politics · Trending</p>
+                            <p class="font-bold">#Trumps</p>
                             <p class="text-sm text-gray-500">4,321 Tweets</p>
                         </li>
                         <li class="hover:bg-gray-200 p-2 rounded-lg cursor-pointer">
-                            <p class="text-sm text-gray-500">Business · Trending</p>
-                            <p class="font-bold">#Web3</p>
+                            <p class="text-sm text-gray-500">Politics · Trending</p>
+                            <p class="font-bold">#MosiTidakPercaya</p>
                             <p class="text-sm text-gray-500">21.7K Tweets</p>
                         </li>
                     </ul>
@@ -174,12 +175,12 @@
         </aside>
     </div>
 
-    
+
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
 
-    
-    @vite(['resources/js/post.js','resources/js/like.js'])
+
+    @vite(['resources/js/post.js', 'resources/js/like.js'])
 
 
 </x-app-layout>
