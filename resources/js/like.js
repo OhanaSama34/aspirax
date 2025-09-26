@@ -1,6 +1,6 @@
 document.addEventListener("click", async (e) => {
     // LIKE BUTTON
-    console.log('like');
+    console.log("like");
     const likeBtn = e.target.closest(".like-button");
     if (likeBtn) {
         const postId = likeBtn.dataset.postId;
@@ -35,91 +35,102 @@ document.addEventListener("click", async (e) => {
         return; // stop propagation
     }
 
-    // COMMENT TOGGLE
-    const postItem = e.target.closest(".post-item");
-    if (!postItem) return;
+    // ===== REPLACE: COMMENT TOGGLE (inside your document.addEventListener("click", ...)) =====
+    const commentBtn = e.target.closest(".comment-button");
+    if (commentBtn) {
+        // jika klik terjadi IN dalam comments-area (mis. klik kirim), jangan toggle
+        if (e.target.closest(".comments-area")) return;
 
-    // Jangan toggle jika klik di dalam comments-area
-    if (e.target.closest(".comments-area")) return;
+        // naik ke post-item
+        const postItem = commentBtn.closest(".post-item");
+        if (!postItem) return;
 
-    const commentArea = postItem.querySelector(".comments-area");
-    const commentsList = commentArea.querySelector(".comments-list");
-    const postId = postItem.dataset.postId;
+        const commentArea = postItem.querySelector(".comments-area");
+        if (!commentArea) return;
 
-    // toggle visibility
-    commentArea.classList.toggle("hidden");
+        const commentsList = commentArea.querySelector(".comments-list");
+        if (!commentsList) return;
 
-    if (!commentArea.classList.contains("hidden")) {
-        try {
-            const res = await fetch(`/posts/${postId}/replies`);
-            const data = await res.json();
+        const postId = postItem.dataset.postId;
+        // toggle visibility
+        commentArea.classList.toggle("hidden");
 
-            // simpan komentar di dataset supaya bisa dipanggil lagi
-            commentsList.dataset.comments = JSON.stringify(data.comments);
-            commentsList.dataset.currentIndex = "0"; // mulai dari 0
-
-            // render awal 5 komentar
-            renderNextComments(commentsList, 5);
-        } catch (err) {
-            console.error(err);
-        }
-    } else {
-        // reset kalau ditutup
-        commentsList.innerHTML = "";
-        commentsList.removeAttribute("data-comments");
-        commentsList.removeAttribute("data-current-index");
-    }
-
-    function renderNextComments(commentsList, count) {
-        const comments = JSON.parse(commentsList.dataset.comments || "[]");
-        let currentIndex = parseInt(commentsList.dataset.currentIndex || "0");
-
-        const nextIndex = Math.min(currentIndex + count, comments.length);
-        const nextBatch = comments.slice(currentIndex, nextIndex);
-
-        // render batch baru
-        const html = nextBatch
-            .map(
-                (c) => `
-            <div class="flex space-x-2 items-start p-2 border rounded">
-                <img src="${
-                    c.user?.avatar ||
-                    "https://placehold.co/40x40/cccccc/333333?text=U"
-                }" class="w-10 h-10 rounded-full">
-                <div>
-                    <p class="font-bold text-gray-800">${c.user?.name}</p>
-                    <p>${c.content}</p>
-                </div>
-            </div>
-        `
-            )
-            .join("");
-        commentsList.insertAdjacentHTML("beforeend", html);
-
-        // update index
-        commentsList.dataset.currentIndex = nextIndex.toString();
-
-        // hapus tombol lama
-        const oldBtn = commentsList.querySelector(".load-more-btn");
-        if (oldBtn) oldBtn.remove();
-
-        // kalau masih ada komentar tersisa, buat tombol lagi
-        if (nextIndex < comments.length) {
-            const loadMoreBtn = document.createElement("button");
-            loadMoreBtn.textContent = "Lihat komentar lainnya";
-            loadMoreBtn.className =
-                "load-more-btn mt-2 text-blue-600 hover:underline text-sm font-semibold";
-
-            loadMoreBtn.addEventListener("click", () => {
+        if (!commentArea.classList.contains("hidden")) {
+            try {
+                // Jika belum pernah load komentar sebelumnya, fetch sekali
+                if (!commentsList.dataset.comments) {
+                    const res = await fetch(`/posts/${postId}/replies`);
+                    if (!res.ok) throw new Error("Failed to fetch replies");
+                    const data = await res.json();
+                    commentsList.dataset.comments = JSON.stringify(
+                        data.comments || []
+                    );
+                    commentsList.dataset.currentIndex = "0";
+                }
+                // render batch pertama (atau lanjutan jika sudah ada dataset)
                 renderNextComments(commentsList, 5);
-            });
-
-            commentsList.insertAdjacentElement("beforeend", loadMoreBtn);
+            } catch (err) {
+                console.error("Fetch replies error:", err);
+            }
+        } else {
+            // tutup -> reset DOM & dataset
+            commentsList.innerHTML = "";
+            commentsList.removeAttribute("data-comments");
+            commentsList.removeAttribute("data-current-index");
         }
+
+        // fungsi render (safety checks included)
+        function renderNextComments(commentsList, count) {
+            const comments = JSON.parse(commentsList.dataset.comments || "[]");
+            let currentIndex = parseInt(
+                commentsList.dataset.currentIndex || "0",
+                10
+            );
+            if (currentIndex >= comments.length) return;
+
+            const nextIndex = Math.min(currentIndex + count, comments.length);
+            const nextBatch = comments.slice(currentIndex, nextIndex);
+
+            const html = nextBatch
+                .map(
+                    (c) => `
+      <div class="flex space-x-2 items-start p-2 border rounded">
+        <img src="${
+            c.user?.avatar || "https://placehold.co/40x40/cccccc/333333?text=U"
+        }" class="w-10 h-10 rounded-full">
+        <div>
+          <p class="font-bold text-gray-800">${c.user?.name || "User"}</p>
+          <p>${c.content || ""}</p>
+        </div>
+      </div>`
+                )
+                .join("");
+            commentsList.insertAdjacentHTML("beforeend", html);
+
+            // update index
+            commentsList.dataset.currentIndex = nextIndex.toString();
+
+            // remove old load-more button
+            const oldBtn = commentsList.querySelector(".load-more-btn");
+            if (oldBtn) oldBtn.remove();
+
+            if (nextIndex < comments.length) {
+                const loadMoreBtn = document.createElement("button");
+                loadMoreBtn.textContent = "Lihat komentar lainnya";
+                loadMoreBtn.className =
+                    "load-more-btn mt-2 text-blue-600 hover:underline text-sm font-semibold";
+                loadMoreBtn.addEventListener("click", () =>
+                    renderNextComments(commentsList, 5)
+                );
+                commentsList.insertAdjacentElement("beforeend", loadMoreBtn);
+            }
+        }
+
+        return; // stop propagation / lanjutkan tidak perlu
     }
 });
 
-// SUBMIT COMMENT
+// ===== REPLACE: SUBMIT COMMENT handler (document.addEventListener("submit", ...)) =====
 document.addEventListener("submit", async (e) => {
     const form = e.target.closest(".comment-form");
     if (!form) return;
@@ -141,32 +152,41 @@ document.addEventListener("submit", async (e) => {
             },
             body: new URLSearchParams({ content }),
         });
+
         const data = await res.json();
 
         if (data.success) {
             const commentsList = form
                 .closest(".comments-area")
                 .querySelector(".comments-list");
-            commentsList.insertAdjacentHTML(
-                "beforeend",
-                `
-                <div class="flex space-x-2 items-start p-2 border rounded">
-                    <img src="${
-                        data.reply.user?.avatar ||
-                        "https://placehold.co/40x40/cccccc/333333?text=U"
-                    }" class="w-10 h-10 rounded-full">
-                    <div>
-                        <p class="font-bold text-gray-800">${
-                            data.reply.user?.name
-                        }</p>
-                        <p>${data.reply.content}</p>
-                    </div>
-                </div>
-            `
+
+            // tambahkan DOM
+            const replyHtml = `
+          <div class="flex space-x-2 items-start p-2 border rounded">
+            <img src="${
+                data.reply.user?.avatar ||
+                "https://placehold.co/40x40/cccccc/333333?text=U"
+            }" class="w-10 h-10 rounded-full">
+            <div>
+              <p class="font-bold text-gray-800">${
+                  data.reply.user?.name || "You"
+              }</p>
+              <p>${data.reply.content}</p>
+            </div>
+          </div>`;
+            commentsList.insertAdjacentHTML("beforeend", replyHtml);
+
+            // update dataset agar pagination tetap konsisten
+            const currentComments = JSON.parse(
+                commentsList.dataset.comments || "[]"
             );
+            currentComments.push(data.reply);
+            commentsList.dataset.comments = JSON.stringify(currentComments);
+
+            // kosongkan input
             input.value = "";
         } else {
-            // Inline error near the form
+            // error handling inline (sama seperti implementasimu)
             let errorEl = form.querySelector(".comment-error");
             if (!errorEl) {
                 errorEl = document.createElement("div");
