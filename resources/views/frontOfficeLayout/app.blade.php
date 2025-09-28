@@ -258,7 +258,7 @@
                     </div>
                 </div>
 
-                <!-- Bagian Sponsor -->
+                {{-- <!-- Bagian Sponsor -->
                 <div class="mt-12 text-left">
                     <h3 class="text-sm font-semibold tracking-wider uppercase text-white">Didukung Oleh</h3>
                     <div class="mt-6 flex flex-wrap justify-start items-start gap-6 sm:gap-8">
@@ -268,7 +268,7 @@
                         </a>
                     </div>
                 </div>
-                <!-- Akhir Bagian Sponsor -->
+                <!-- Akhir Bagian Sponsor --> --}}
 
                 <div class="mt-8 border-t border-gray-700 pt-8 text-center text-sm">
                     <p>&copy; 2025 AspiraX. All rights reserved.</p>
