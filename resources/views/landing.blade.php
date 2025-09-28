@@ -229,10 +229,10 @@
                     "Kita seolah-olah merayakan demokrasi, tetapi memotong lidah orang-orang yang berani menyatakan
                     pendapat mereka yang merugikan pemerintah."
                 </p>
-                <button
+                <a href="https://news.detik.com/"
                     class="mt-8 px-8 py-3 bg-white text-gray-900 font-bold rounded-full hover:bg-gray-200 transition-colors duration-300">
                     Discover News
-                </button>
+                </a>
             </div>
             <div class="absolute bottom-0 left-0 w-full bg-black/30 backdrop-blur-sm py-4 overflow-hidden">
                 <div class="flex animate-scrolling">

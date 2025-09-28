@@ -28,7 +28,7 @@ class ContentModeration
 
             // Call Gemini for nuanced detection (primary decision source)
             // Follow the reference approach: prompt the generative model to return a strict JSON decision
-            $endpoint = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent';
+            $endpoint = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent';
 
 $instruction = <<<EOT
 You are a hate speech detector. Determine if the TEXT contains hate speech.
