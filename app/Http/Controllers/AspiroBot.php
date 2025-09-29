@@ -61,7 +61,7 @@ class AspiroBot extends Controller
 Kamu adalah Aspiro, asisten politik netral yang memberi jawaban singkat, menarik, dan berbasis fakta.
 
 Prinsip Jawaban:
-- Bahasa Indonesia, ≤100 kata. Utamakan 2–3 kalimat atau 3 bullet maksimum.
+- Bahasa Indonesia, ≤100 kata. Utamakan 2–3 kalimat atau 3 poin maksimum.
 - Mulai dengan 1 kalimat takeaway yang jelas (hook), lalu dukung dengan poin/kalimat ringkas.
 - Netral dan adil: tampilkan sudut pandang/pro–kontra dan trade-off utama.
 - Nyatakan ketidakpastian bila data terbatas; jangan buat klaim tanpa dasar.
@@ -74,11 +74,13 @@ Batasan & Keamanan:
 - Jika diminta update real-time, beri disclaimer singkat soal keterbatasan waktu.
 - Bukan nasihat hukum/medis; arahkan ke profesional bila relevan.
 
-Format Output (pilih salah satu, yang paling ringkas terhadap pertanyaan pengguna):
-- 2–3 kalimat, atau
-- Maks. 3 bullet: (1) inti isu, (2) pro, (3) kontra/trade-off.
+Format Output - PENTING: JANGAN GUNAKAN FORMAT MARKDOWN (*, **, -, #, dll):
+- Gunakan format teks biasa tanpa simbol markdown
+- Untuk poin-poin, gunakan format seperti "Pertama, ... Kedua, ... Ketiga, ..." atau "Di satu sisi, ... Di sisi lain, ..."
+- Atau gunakan format paragraf biasa dengan kalimat yang mengalir natural
+- Maksimal 3 poin utama dengan penjelasan singkat
 
-Nada: sopan, to the point, engaging tanpa hiperbola, tetap netral.
+Nada: sopan, to the point, engaging tanpa hiperbola, tetap netral. Gunakan bahasa percakapan yang natural seperti sedang berbicara dengan teman.
 EOT;
 
 		// Build Gemini request with structured history (improves relevance)
@@ -143,6 +145,9 @@ EOT;
 				]);
 			}
 
+			// Clean up markdown formatting for more natural responses
+			$modelText = $this->cleanMarkdownFormatting($modelText);
+
 			$history[] = ['role' => 'assistant', 'content' => $modelText];
 			if (count($history) > 16) {
 				$history = array_slice($history, -16);
@@ -171,5 +176,43 @@ EOT;
 	{
 		Session::forget('aspiro_chat_history');
 		return response()->json(['ok' => true]);
+	}
+
+	/**
+	 * Clean markdown formatting from AI response to make it more natural.
+	 */
+	private function cleanMarkdownFormatting(string $text): string
+	{
+		// Remove bold formatting (**text** or __text__)
+		$text = preg_replace('/\*\*(.*?)\*\*/', '$1', $text);
+		$text = preg_replace('/__(.*?)__/', '$1', $text);
+		
+		// Remove italic formatting (*text* or _text_)
+		$text = preg_replace('/\*(.*?)\*/', '$1', $text);
+		$text = preg_replace('/_(.*?)_/', '$1', $text);
+		
+		// Remove bullet points (* or - at start of line)
+		$text = preg_replace('/^\s*[\*\-\+]\s+/m', '', $text);
+		
+		// Remove headers (# ## ###)
+		$text = preg_replace('/^#+\s*/m', '', $text);
+		
+		// Remove code blocks (```code```)
+		$text = preg_replace('/```.*?```/s', '', $text);
+		
+		// Remove inline code (`code`)
+		$text = preg_replace('/`([^`]+)`/', '$1', $text);
+		
+		// Remove links [text](url)
+		$text = preg_replace('/\[([^\]]+)\]\([^\)]+\)/', '$1', $text);
+		
+		// Clean up multiple spaces and newlines
+		$text = preg_replace('/\s+/', ' ', $text);
+		$text = preg_replace('/\n\s*\n/', "\n\n", $text);
+		
+		// Trim whitespace
+		$text = trim($text);
+		
+		return $text;
 	}
 }
