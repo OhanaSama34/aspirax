@@ -124,7 +124,7 @@
                                     <!-- Add / placeholder button -->
                                     <div class="hover:text-blue-500">
                                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path d="M12 5L12 19M5 12L19 12" stroke-width="2" stroke-linecap="round">
+                                            <path d="M12 5L12 19M5 12L19 12" stroke-width="2" stroke-linecap="round" fill="currentColor">
                                             </path>
                                         </svg>
                                     </div>
